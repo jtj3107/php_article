@@ -1,20 +1,20 @@
 <?php
-$dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
+  $dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
 
-$sql = "
-SELECT *
-FROM article AS A
-ORDER BY A.id DESC
-";
-$rs = mysqli_query($dbConn, $sql);
+  $sql = "
+  select *
+  from article as A
+  order by A.id desc
+  ";
 
-$articles = [];
+  $rs = mysqli_query($dbConn, $sql);
 
-while ($article = mysqli_fetch_assoc($rs)){
-  $articles[] = $article;
-}
+  $articles = [];
+  while ( $article = mysqli_fetch_assoc($rs)){
+    $articles[] = $article;
+  }
+  
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +28,11 @@ while ($article = mysqli_fetch_assoc($rs)){
   <hr>
 
   <div>
-    <?php foreach ($articles as $article) { ?>
-      번호 : <?= $article['id']?><br>
-      작성 : <?= $article['regDate']?><br>
-      수정 : <?= $article['updateDate']?><br>
-      제목 : <?= $article['title']?><br>
+    <?php foreach ($articles as $article){ ?>
+      번호 : <?=$article['id']?><br>
+      작성 : <?=$article['regDate']?><br>
+      수정 : <?=$article['updateDate']?><br>
+      제목 : <?=$article['title']?><br>
       <hr>
     <?php } ?>
   </div>
