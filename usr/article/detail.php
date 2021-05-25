@@ -33,6 +33,9 @@
 </head>
 <body>
   <h1><?=$id?>번 게시물 상세페이지</h1>
+  <a href="list.php">글 리스트</a>
+  <a href="modify.php?id=<?=$article['id']?>">수정</a>
+  <a onclick="if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['id']?>">삭제</a>
   <hr>
     <div>번호 : <?=$article['id']?></div>
     <div>작성 : <?=$article['regDate']?></div>

@@ -25,6 +25,7 @@
 </head>
 <body>
   <h1>게시물 리스트</h1>
+  <a href="write.php">글작성</a>
   <hr>
 
   <div>
@@ -33,6 +34,7 @@
       작성 : <?=$article['regDate']?><br>
       수정 : <?=$article['updateDate']?><br>
       제목 : <?=$article['title']?><br>
+      <a href="detail.php?id=<?=$article['id']?>">상세페이지</a>
       <hr>
     <?php } ?>
   </div>

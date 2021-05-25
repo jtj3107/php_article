@@ -46,6 +46,7 @@
 
   $rs = mysqli_query($dbConn, $sql);
 ?>
-<div><?=$id?>번 게시물이 수정 되었습니다.</div>
-<div><a href="detail.php?id=<?=$id?>">상세페이지로 이동</a></div>
-<div><a href="list.php">리스트로 이동</a></div>
+<script>
+alert('<?=$article['id']?>번 게시물이 수정되었습니다');
+location.replace('detail.php?id=<?=$article['id']?>');
+</script>

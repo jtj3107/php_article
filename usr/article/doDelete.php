@@ -32,5 +32,7 @@
 
   $rs = mysqli_query($dbConn, $sql);
 ?>
-<div><?=$id?>번 게시물이 삭제 되었습니다.</div>
-<div><a href="list.php">리스트로 돌아가기</a></div>
+<script>
+alert('<?=$article['id']?>번 게시물이 삭제되었습니다.');
+location.replace("list.php");
+</script>
