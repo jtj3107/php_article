@@ -1,5 +1,11 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+
+  if(!isset($_SESSION['loginedMemberId'])){
+    echo "로그인후 사용 가능합니다.";
+    exit;
+  }
+  
 ?>
 <?php 
   $pageTitle = "게시물 작성";

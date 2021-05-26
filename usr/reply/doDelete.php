@@ -1,4 +1,5 @@
 <?php
+  
   if ( !isset($_GET['id'])){
     echo "id를 입력해주세요";
     exit;
@@ -15,7 +16,19 @@
   where R.id = '${id}'
   ";
 
+  $memberId = intval($_SESSION['loginedMemberId']);
+
+  if(!isset($memberId)){
+    echo "로그인후 사용가능합니다.";
+    exit;
+  }
+  
   $reply = DB__getReply($sql);
+
+  if($_SESSION['loginedMemberId'] != $reply['memberId']){
+    echo "해당 댓글 작성자만 삭제 가능합니다.";
+    exit;
+  }
 
   if($reply == null){
     echo "${id}번 댓글은 존재하지 않습니다.";

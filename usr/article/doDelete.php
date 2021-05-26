@@ -16,6 +16,17 @@
   ";
 
   $article = DB__getRow($sql);
+  $memberId = intval($_SESSION['loginedMemberId']);
+
+  if(!isset($memberId)){
+    echo "로그인후 사용가능합니다.";
+    exit;
+  }
+
+  if($_SESSION['loginedMemberId'] != $article['memberId']){
+    echo "해당 게시물 작성자만 삭제 가능합니다.";
+    exit;
+  }
 
   if($article == null){
     echo "${id}번 게시물은 존재하지 않습니다.";

@@ -32,7 +32,8 @@
   set regDate = now(),
   updateDate = now(),
   body = '${body}',
-  articleId = '$articleId'
+  articleId = '$articleId',
+  memberId = '$memberId'
   ";
 
   DB__query($sql);

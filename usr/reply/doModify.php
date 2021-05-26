@@ -34,6 +34,7 @@
   update reply
   set updateDate = now(),
   `body` = '${body}'
+  where id = '${id}'
   ";
 
   DB__modifyReply($sql);

@@ -14,6 +14,8 @@
   ";
   
   $article = DB__getRow($sql);
+
+  $memberId = intval($_SESSION['loginedMemberId']);
   
   if ($article == null){
     echo "${id}번 게시물은 존재하지 않습니다";
@@ -28,6 +30,7 @@
   ";
 
   $replyes = DB__getReplies($repliSql);
+
 
 ?>
 <?php
@@ -47,6 +50,13 @@
     <div>내용 : <?=$article['body']?></div>
     <hr>
     <div>댓글 작성</div>
+    <?php
+    if(!isset($memberId)){
+      echo "로그인후 사용가능합니다.";
+      exit;
+    }
+    ?>
+    
     <form action="../reply/doWrite.php?articleId=<?=$article['id']?>">
     <input type="hidden" name = "articleId" value = "<?=$article['id']?>">
     <div>

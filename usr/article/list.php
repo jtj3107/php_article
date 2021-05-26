@@ -8,7 +8,6 @@
   ";
 
   $articles = DB__getRows($sql);
-  
 ?>
 <?php
   $pageTitle = "게시물 리스트";
@@ -19,9 +18,22 @@
 <hr>
 <div>
   <?php foreach ($articles as $article){ ?>
+    <?php
+     $memberId = $article['memberId']
+    ?>
+    <?php 
+      $memberSql = "
+      select *
+      from member as M
+      where M.id = '${memberId}'
+      ";
+    
+      $member = DB__getRow($memberSql);
+    ?>
     번호 : <?=$article['id']?><br>
     작성 : <?=$article['regDate']?><br>
     수정 : <?=$article['updateDate']?><br>
+    작성자 : <?=$member['nickName']?><br>
     <a href="detail.php?id=<?=$article['id']?>">제목 : <?=$article['title']?><br></a> 
     <hr>
   <?php } ?>

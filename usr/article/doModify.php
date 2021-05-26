@@ -17,6 +17,12 @@
   $id = intval($_GET['id']);
   $title = $_GET['title'];
   $body = $_GET['body'];
+  $memberId = intval($_SESSION['loginedMemberId']);
+
+  if(!isset($memberId)){
+    echo "로그인후 사용가능합니다.";
+    exit;
+  }
 
 ?>
 <?php 
@@ -40,7 +46,8 @@
   update article
   set updateDate = now(),
   title = '${title}',
-  `body` = '${body}'
+  `body` = '${body}',
+  memberId= '${memberId}'
   where id = '${id}'
   ";
 

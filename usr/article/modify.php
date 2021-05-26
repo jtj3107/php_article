@@ -1,6 +1,11 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
+  if(!isset($_SESSION['loginedMemberId'])){
+    echo "로그인후 사용 가능합니다.";
+    exit;
+  }
+
   if(!isset($_GET['id'])){
     echo "id를 입력 해주세요.";
     exit;
@@ -15,6 +20,11 @@
   ";
 
   $article = DB__getRow($sql);
+
+  if($_SESSION['loginedMemberId'] != $article['memberId']){
+    echo "해당 게시물 작성자만 수정 가능합니다.";
+    exit;
+  }
 
   if($article == null){
     echo "${id}번 게시물은 존재하지 않습니다";

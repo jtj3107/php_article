@@ -1,6 +1,11 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
+  if(!isset($_SESSION['loginedMemberId'])){
+    echo "로그인후 사용 가능합니다.";
+    exit;
+  }
+
   if(!isset($_GET['id'])){
     echo "id를 입력 해주세요.";
     exit;
@@ -18,6 +23,11 @@
 
   if($reply == null){
     echo "존재하지 않는 댓글입니다.";
+    exit;
+  }
+
+  if($_SESSION['loginedMemberId'] != $reply['memberId']){
+    echo "해당 댓글 작성자만 수정 가능합니다.";
     exit;
   }
 ?>
