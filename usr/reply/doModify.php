@@ -14,7 +14,7 @@
 
 ?>
 <?php 
-  $dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
   $sql = "
   select *
@@ -22,8 +22,7 @@
   where id = '${id}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
-  $reply = mysqli_fetch_assoc($rs);
+  $reply = DB__getReply($sql);
 
   if($reply == null){
     echo "존재하지 않는 댓글입니다.";
@@ -37,7 +36,7 @@
   `body` = '${body}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
+  DB__modifyReply($sql);
 ?>
 <script>
 alert('댓글이 수정되었습니다');

@@ -1,6 +1,5 @@
 <?php
-  $dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
-
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
   if(!isset($_GET['title'])){
     echo "title를 입력헤주세요";
     exit;
@@ -22,8 +21,7 @@
   `body` = '${body}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
-  $id = mysqli_insert_id($dbConn);
+  $id = DB__insertId($sql);
 ?>
 <script>
 alert('<?=$id?>번 게시물이 생성되었습니다.');

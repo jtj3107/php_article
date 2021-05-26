@@ -7,7 +7,7 @@
   $id = intval($_GET['id']);
 ?>
 <?php 
-  $dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
   $sql = "
   select *
@@ -15,8 +15,7 @@
   where id = '${id}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
-  $article = mysqli_fetch_assoc($rs);
+  $article = DB__getRow($sql);
 
   if($article == null){
     echo "${id}번 게시물은 존재하지 않습니다.";
@@ -30,7 +29,7 @@
   where id = '${id}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
+  DB__delete($sql);
 ?>
 <script>
 alert('<?=$article['id']?>번 게시물이 삭제되었습니다.');

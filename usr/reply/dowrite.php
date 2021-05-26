@@ -1,5 +1,5 @@
 <?php
-  $dbConn = mysqli_connect("127.0.0.1", "geotjeoli", "gjl123414", "php_blog_2021") or die("DB CONNECTION ERROR");
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
   
   if(!isset($_GET['articleId'])){
     echo "게시물을 선택해주세요.";
@@ -19,8 +19,8 @@
   from article as A
   where A.id = '${articleId}'
   ";
-  $articleRs = mysqli_query($dbConn, $articleSql);
-  $article = mysqli_fetch_assoc($articleRs);
+
+  $article = DB__getRow($articleSql);
 
   if($article == null){
     echo "존재하지 않는 게시물입니다.";
@@ -35,8 +35,7 @@
   articleId = '$articleId'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
-  $id = mysqli_insert_id($dbConn);
+  DB__query($sql);
 ?>
 <script>
   alert('댓글이 등록 되었습니다.');
