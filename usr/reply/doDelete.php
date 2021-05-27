@@ -23,7 +23,7 @@
     exit;
   }
   
-  $reply = DB__getReply($sql);
+  $reply = DB__getRow($sql);
 
   if($_SESSION['loginedMemberId'] != $reply['memberId']){
     echo "해당 댓글 작성자만 삭제 가능합니다.";
@@ -42,7 +42,7 @@
   where id = '${id}'
   ";
 
-  $rs = mysqli_query($dbConn, $sql);
+  DB__delete($sql);
 ?>
 <script>
 alert('댓글이 삭제되었습니다.');

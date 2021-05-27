@@ -5,6 +5,9 @@
     echo "로그인후 사용 가능합니다.";
     exit;
   }
+
+  $sql = "SELECT * FROM board ORDER BY id ASC";
+  $boards = db__getRows($sql);
   
 ?>
 <?php 
@@ -14,6 +17,14 @@
   <hr>
 
   <form action="doWrite.php">
+  <div>
+    <select name="boardId" required>
+      <option>게시판 선택</option>
+      <?php foreach( $boards as $board ) { ?>
+        <option value="<?=$board['id']?>"><?=$board['name']?></option>
+      <?php } ?>
+    </select>
+    </div>
     <div>
       <span>제목</span>
       <input require placeholder = '제목을 입력해주세요.' type="text" name = "title">

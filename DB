@@ -1,0 +1,118 @@
+DROP DATABASE IF EXISTS php_blog_2021;
+CREATE DATABASE php_blog_2021;
+USE php_blog_2021;
+
+CREATE TABLE article(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    title CHAR(100),
+    `body` TEXT
+);
+ALTER TABLE article ADD COLUMN memberId INT(10) NOT NULL;
+ALTER TABLE article ADD COLUMN boardId INT(10) NOT NULL;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목1',
+`body` = '내용1',
+memberId = 1,
+boardId = 1;
+
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목2',
+`body` = '내용2',
+memberId = 2,
+boardId = 2;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목3',
+`body` = '내용3',
+memberId = 1,
+boardId = 1;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목4',
+`body` = '내용4',
+memberId = 2,
+boardId = 2;
+
+CREATE TABLE reply(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `body` TEXT,
+    memberId INT(10) NOT NULL
+);
+
+ALTER TABLE reply ADD COLUMN articleId INT(10) NOT NULL;
+
+CREATE TABLE `member` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId CHAR(20) NOT NULL,
+    loginPw CHAR(100) NOT NULL,
+    `name` CHAR(20) NOT NULL,
+    nickname CHAR(20) NOT NULL,
+    email CHAR(100) NOT NULL,
+    phoneNo CHAR(20) NOT NULL
+);
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user1',
+loginPw = 'user1',
+`name` = '홍길동',
+nickname = '강바람',
+email = 'user1@test.com',
+phoneNo = '01011111111';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user2',
+loginPw = 'user2',
+`name` = '홍길순',
+nickname = '이또한',
+email = 'user2@test.com',
+phoneNo = '01022222222'; 
+
+TRUNCATE article;
+TRUNCATE reply;
+TRUNCATE `member`;
+
+CREATE TABLE board(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `name` CHAR(100) NOT NULL,
+    `code` CHAR(100) NOT NULL,
+    memberId INT(10) NOT NULL
+);
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '공지',
+`code` = 'notice',
+memberId = 1;
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '자유',
+`code` = 'free',
+memberId = 2;

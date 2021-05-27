@@ -12,7 +12,8 @@
 
   $title = $_GET['title'];
   $body = $_GET['body'];
-  $memberId = intval($_SESSION['loginedMemberId']);
+  $boardId = $_GET['boardId'];
+  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
                             
   if(!isset($memberId)){
     echo "로그인후 사용가능합니다.";
@@ -25,7 +26,8 @@
   updateDate = now(),
   title = '${title}',
   `body` = '${body}',
-  memberId = '${memberId}'
+  memberId = '${memberId}',
+  boardId = '${boardId}'
   ";
 
   $id = DB__insertId($sql);

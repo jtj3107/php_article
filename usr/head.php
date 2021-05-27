@@ -10,5 +10,13 @@
 <body>
   <h1><?=$pageTitle?></h1>
   <?php if(isset($_SESSION['loginedMemberId'])) { ?>
-  <a href="/usr/member/doLogout.php">로그아웃</a>
+    <a href="/usr/member/doLogout.php">로그아웃</a>
+    <a href="/usr/member/modify.php">회원수정</a>
+    <a href="/usr/member/doDelete.php">회원탈퇴</a>
   <?php } ?>
+  <?php if(!isset($_SESSION['loginedMemberId'])) { ?>
+    <a href="/usr/member/login.php">로그인</a>
+    <a href="/usr/member/join.php">회원가입</a>
+  <?php } ?>
+  
+  

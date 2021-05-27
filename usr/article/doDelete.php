@@ -16,8 +16,8 @@
   ";
 
   $article = DB__getRow($sql);
-  $memberId = intval($_SESSION['loginedMemberId']);
-
+  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0; 
+  
   if(!isset($memberId)){
     echo "로그인후 사용가능합니다.";
     exit;

@@ -17,7 +17,7 @@
   $id = intval($_GET['id']);
   $title = $_GET['title'];
   $body = $_GET['body'];
-  $memberId = intval($_SESSION['loginedMemberId']);
+  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
 
   if(!isset($memberId)){
     echo "로그인후 사용가능합니다.";
@@ -47,7 +47,7 @@
   set updateDate = now(),
   title = '${title}',
   `body` = '${body}',
-  memberId= '${memberId}'
+  memberId= '${memberId}',
   where id = '${id}'
   ";
 

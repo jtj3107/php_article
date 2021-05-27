@@ -33,6 +33,6 @@
   $_SESSION['loginedMemberId'] = $member['id'];
 ?>
 <script>
-alert('<?=$member['nickName']?>님 환영합니다.');
+alert('<?=$member['nickname']?>님 환영합니다.');
 location.replace('../article/list.php');
 </script>

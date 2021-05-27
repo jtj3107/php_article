@@ -15,7 +15,7 @@
   
   $article = DB__getRow($sql);
 
-  $memberId = intval($_SESSION['loginedMemberId']);
+  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
   
   if ($article == null){
     echo "${id}번 게시물은 존재하지 않습니다";
@@ -29,7 +29,7 @@
   order by R.id desc
   ";
 
-  $replyes = DB__getReplies($repliSql);
+  $replyes = DB__getRows($repliSql);
 
 
 ?>
@@ -56,7 +56,6 @@
       exit;
     }
     ?>
-    
     <form action="../reply/doWrite.php?articleId=<?=$article['id']?>">
     <input type="hidden" name = "articleId" value = "<?=$article['id']?>">
     <div>
@@ -66,7 +65,7 @@
     <div>
       <input type="submit" value = "댓글작성">
     </div>
-  </form>
+    </form>
     <div>
       <?php foreach ($replyes as $reply){ ?>
         댓글 : <?=$reply['body']?><br>

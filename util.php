@@ -38,18 +38,6 @@ function DB__insertId($sql){
   
   return mysqli_insert_id($dbConn);
 }
-function DB__getReplies($sql){
-  global $dbConn;
-  $rs = mysqli_query($dbConn, $sql);
-
-  $replies = [];
-
-  while($reply = mysqli_fetch_assoc($rs)){
-    $replies[] = $reply;
-  }
-
-  return $replies;
-}
 function DB__getReply($sql){
   global $dbConn;
   $rs = mysqli_query($dbConn, $sql);

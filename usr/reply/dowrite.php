@@ -27,6 +27,13 @@
     exit;
   }
   
+  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
+
+  if($memberId == null){
+      echo "로그인후 작성 가능합니다.";
+      exit;
+  }
+  
   $sql = "
   insert into reply
   set regDate = now(),
