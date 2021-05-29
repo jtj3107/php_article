@@ -24,7 +24,7 @@
     jsHistoryBackExit("존재하지 않는 댓글 입니다.");
   }
 
-  if($memberId != $reply['memberId']){
+  if($memberId != 1 and $memberId != $reply['memberId']){
     jsHistoryBackExit("해당 댓글 작성자만 수정 가능합니다.");
   }
 ?>
