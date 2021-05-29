@@ -1,32 +1,29 @@
 <?php 
-  if(!isset($_GET['id'])){
-    echo "id를 입력해주세요.";
-    exit;
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  $id = getIntValueOr($_GET['id'], 0);
+
+  if( empty($id)){
+    jsHistoryBackExit("id를 입력해주세요.");
   }
 
-  if( !isset($_GET['title'])){
-    echo "title를 입력해주세요";
-    exit;
+  $title = getStrValueOr($_GET['title'], "");
+
+  if( empty($title)){
+    jsHistoryBackExit("title를 입력해주세요.");
   }
 
-  if(!isset($_GET['body'])){
-    echo "body를 입력해주세요.";
-    exit;
+  $body = getStrValueOr($_GET['body'], "");
+
+  if( empty($body)){
+    jsHistoryBackExit("body를 입력해주세요.");
   }
 
-  $id = intval($_GET['id']);
-  $title = $_GET['title'];
-  $body = $_GET['body'];
-  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
+  $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
 
   if(!isset($memberId)){
     echo "로그인후 사용가능합니다.";
     exit;
-  }
-
-?>
-<?php 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  } 
 
   $sql = "
   select *
@@ -36,24 +33,17 @@
 
   $article = DB__getRow($sql);
 
-  if($article == null){
-    echo "${id}번 게시물은 존재하지 않습니다.";
-    exit;
-  }
-?>
-<?php 
-  $sql = "
+  if(!isset($article)){
+    jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
+  } 
+  $updateSql = "
   update article
   set updateDate = now(),
   title = '${title}',
   `body` = '${body}',
-  memberId= '${memberId}',
+  memberId= '${memberId}'
   where id = '${id}'
   ";
 
-  DB__modify($sql);
-?>
-<script>
-alert('<?=$article['id']?>번 게시물이 수정되었습니다');
-location.replace('detail.php?id=<?=$article['id']?>');
-</script>
+  DB__modify($updateSql);
+  jsLocationReplaceExit("detail.php?id=${id}", "${id}번 게시물이 수정되었습니다.");

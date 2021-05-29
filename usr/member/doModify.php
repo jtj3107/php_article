@@ -42,12 +42,10 @@
 
   $member = DB__getRow($sql);
 
-  if($member == null){
-    echo "잘못된 접근입니다.";
-    exit;
+  if(empty($member)){
+    jsHistoryBackExit("잘못된 접근입니다.");
   }
-?>
-<?php 
+  
   $sql = "
   update `member`
   set updateDate = now(),
@@ -59,8 +57,4 @@
   ";
 
   DB__modify($sql);
-?>
-<script>
-alert('회원정보가 수정되었습니다.');
-location.replace('../article/list.php');
-</script>
+  jsLocationReplaceExit("../article/list.php", "회원정보가 수정되었습니다.");

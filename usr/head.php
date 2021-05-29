@@ -12,11 +12,13 @@
   <?php if(isset($_SESSION['loginedMemberId'])) { ?>
     <a href="/usr/member/doLogout.php">로그아웃</a>
     <a href="/usr/member/modify.php">회원수정</a>
-    <a href="/usr/member/doDelete.php">회원탈퇴</a>
+    <a onclick = "if(!confirm('정말로 탈퇴하시겠습니까?')){return false;}" href="/usr/member/doDelete.php?id=<?=$_SESSION['loginedMemberId']?>">회원탈퇴</a>
   <?php } ?>
   <?php if(!isset($_SESSION['loginedMemberId'])) { ?>
     <a href="/usr/member/login.php">로그인</a>
     <a href="/usr/member/join.php">회원가입</a>
   <?php } ?>
   
+
+
   

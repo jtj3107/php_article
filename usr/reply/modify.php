@@ -1,17 +1,16 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
-  if(!isset($_SESSION['loginedMemberId'])){
-    echo "로그인후 사용 가능합니다.";
-    exit;
+  $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
+  if(empty($memberId)){
+    jsHistoryBackExit("로그인 후 사용 가능합니다.");
   }
+  
+  $id = getIntValueOr($_GET['id'], 0);
 
-  if(!isset($_GET['id'])){
-    echo "id를 입력 해주세요.";
-    exit;
+  if(empty($id)){
+    jsHistoryBackExit("id를 입력해주세요.");
   }
-
-  $id = intval($_GET['id']);
 
   $sql = "
   select * 
@@ -21,14 +20,12 @@
 
   $reply = DB__getReply($sql);
 
-  if($reply == null){
-    echo "존재하지 않는 댓글입니다.";
-    exit;
+  if(empty($reply)){
+    jsHistoryBackExit("존재하지 않는 댓글 입니다.");
   }
 
-  if($_SESSION['loginedMemberId'] != $reply['memberId']){
-    echo "해당 댓글 작성자만 수정 가능합니다.";
-    exit;
+  if($memberId != $reply['memberId']){
+    jsHistoryBackExit("해당 댓글 작성자만 수정 가능합니다.");
   }
 ?>
 <!DOCTYPE html>

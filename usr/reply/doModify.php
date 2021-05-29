@@ -1,20 +1,16 @@
 <?php 
-  if(!isset($_GET['id'])){
-    echo "id를 입력해주세요.";
-    exit;
-  }
-
-  if(!isset($_GET['body'])){
-    echo "body를 입력해주세요.";
-    exit;
-  }
-
-  $id = intval($_GET['id']);
-  $body = $_GET['body'];
-
-?>
-<?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+
+  $id = getIntValueOr($_GET['id'], 0);
+  $body = getStrValueOr($_GET['body'], 0);
+
+  if(empty($id)){
+    jsHistoryBackExit("id를 입력해주세요.");
+  }
+
+  if(empty($body)){
+    jsHistoryBackExit("body를 입력헤주세요.");
+  }
 
   $sql = "
   select *
@@ -24,12 +20,10 @@
 
   $reply = DB__getReply($sql);
 
-  if($reply == null){
-    echo "존재하지 않는 댓글입니다.";
-    exit;
+  if(empty($reply)){
+    jsHistoryBackExit("잘못된 접근입니다.");
   }
-?>
-<?php 
+
   $sql = "
   update reply
   set updateDate = now(),
@@ -38,8 +32,5 @@
   ";
 
   DB__modifyReply($sql);
-?>
-<script>
-alert('댓글이 수정되었습니다');
-location.replace('../article/detail.php?id=<?=$reply['articleId']?>');
-</script>
+  $replyArticleId = $reply['articleId'];
+  jsLocationReplaceExit("../article/detail.php?id=$replyArticleId" , "댓글이 수정되었습니다.");

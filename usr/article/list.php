@@ -1,8 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
-  
-  $boardId = isset($_GET['boardId']) ? intval($_GET['boardId']) : 0;
-  
+  $boardId = isset($_GET['boardId']) ? $_GET['boardId'] : 0;
   $sql = "
   select *
   from article as A
@@ -25,7 +23,7 @@
 <a href="write.php?boardId=<?=$boardId?>">글작성</a>
 <hr>
 <nav>
-  <ul>
+    <button onclick = "location.href = '../board/write.php' ">게시판 추가</button>
     <?php foreach( $boards as $board ) { ?>
       <li style="display: inline-block;"><a href="./list.php?boardId=<?=$board['id']?>"><?=$board['name']?></a></li>
     <?php } ?>
@@ -56,15 +54,17 @@
        
          $board = DB__getRow($memberSql);
          $boardName = isset($board['name']) ? $board['name'] : "카테고리없음";
+
         ?>
+        게시판 : <?=$boardName?><br>
         번호 : <?=$article['id']?><br>
         작성 : <?=$article['regDate']?><br>
-        수정 : <?=$article['updateDate']?><br>
         작성자 : <?=$member['nickname']?><br>
-        게시판 : <?=$boardName?><br>
+        좋아요 : <?=$article['like_count']?><br>
         <a href="detail.php?id=<?=$article['id']?>">제목 : <?=$article['title']?><br></a> 
         <hr>
       <?php } ?>
   <?php } ?>
 </div>
 <?php include_once __DIR__ . "/../foot.php"; ?>
+

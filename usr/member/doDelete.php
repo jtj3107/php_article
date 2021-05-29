@@ -4,8 +4,7 @@
   $id = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0; 
   
   if(!isset($id)){
-    echo "로그인후 사용가능합니다.";
-    exit;
+    jsHistoryBackExit("로그인 후 사용가능합니다.");
   }
   $sql = "
   select *
@@ -16,19 +15,15 @@
   $member = DB__getRow($sql);
 
   if($member == null){
-    echo "잘못된 접근입니다.";
-    exit;
+    jsHistoryBackExit("잘못된 접근입니다.");
   }
 
-?>
-<?php 
   $sql = "
-  select * from `member`
+  update `member`
+  set delStatus = 0
+  where id = '${id}'
   ";
-  delStatus
-  DB__delete($sql);
-?>
-<script>
-alert('<?=$article['id']?>번 게시물이 삭제되었습니다.');
-location.replace("list.php");
-</script>
+  
+  DB__modify($sql);
+  unset($_SESSION['loginedMemberId']);
+  jsLocationReplaceExit("../article/list.php", "회원 탈퇴 되었습니다.");

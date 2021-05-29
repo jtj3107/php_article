@@ -1,14 +1,10 @@
 <?php
-  if ( !isset($_GET['id'])){
-    echo "id를 입력해주세요";
-    exit;
-  }
-
-  $id = intval($_GET['id']);
-?>
-<?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  $id = getIntValueOr($_GET['id'], 0);
 
+  if(empty($id)){
+    jsHistoryBackExit("게시물 번호를 입력해주세요.");
+  }
   $sql = "
   select *
   from article
@@ -16,33 +12,24 @@
   ";
 
   $article = DB__getRow($sql);
-  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0; 
+  $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
   
-  if(!isset($memberId)){
-    echo "로그인후 사용가능합니다.";
-    exit;
+  if(empty($memberId)){
+    jsHistoryBackExit("로그인후 사용 가능합니다.");
   }
 
-  if($_SESSION['loginedMemberId'] != $article['memberId']){
-    echo "해당 게시물 작성자만 삭제 가능합니다.";
-    exit;
+  
+  if(empty($article)){
+    jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
   }
-
-  if($article == null){
-    echo "${id}번 게시물은 존재하지 않습니다.";
-    exit;
+  
+  if($memberId != 1 and $memberId != $article['memberId']){
+    jsHistoryBackExit("해당 작성자만 삭제 가능합니다.");
   }
-
-?>
-<?php 
   $sql = "
-  delete from article
-  where id = '${id}'
-  ";
-
+    delete from article
+    where id = '${id}'
+    ";
   DB__delete($sql);
-?>
-<script>
-alert('<?=$article['id']?>번 게시물이 삭제되었습니다.');
-location.replace("list.php");
-</script>
+  jsLocationReplaceExit("list.php","${id}번 게시물이 삭제 되었습니다.");
+  

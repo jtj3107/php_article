@@ -2,8 +2,7 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
   if(!isset($_SESSION['loginedMemberId'])){
-    echo "로그인후 사용 가능합니다.";
-    exit;
+    jsHistoryBackExit("로그인 후 사용가능합니다.");
   }
   
 ?>

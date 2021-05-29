@@ -1,13 +1,11 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  
+    $id = getIntValueOr($_SESSION['loginedMemberId'], 0);
 
-  if(!isset($_SESSION['loginedMemberId'])){
-    echo "로그인후 사용 가능합니다.";
-    echo "<button onclick = \"location.herf = 'join.php'\">로그인</button>";
-    exit;
+  if(empty($id)){
+    jsHistoryBackExit("로그인 후 사용 가능합니다.");
   }
-
-  $id = $_SESSION['loginedMemberId'];
 
   $sql = "
   select * 
@@ -17,9 +15,8 @@
 
   $member = DB__getRow($sql);
 
-  if($member == null){
-    echo "잘못된 접근입니다.";
-    exit;
+  if(empty($member)){
+   jsHistoryBackExit("잘못된 접근입니다.");
   }
 ?>
 <?php 

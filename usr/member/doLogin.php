@@ -1,17 +1,16 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
-  if(!isset($_GET['loginId'])){
-    echo "loginId를 입력헤주세요";
-    exit;
+  
+  $loginId = getStrValueOr($_GET['loginId'], "");
+  $loginPw = getStrValueOr($_GET['loginPw'], "");
+  
+  if(empty($loginId)){
+    jsHistoryBackExit("loginId를 입력해주세요.");
   }
   
-  if(!isset($_GET['loginPw'])){
-    echo "loginPw를 입력헤주세요";
-    exit;
+  if(empty($loginPw)){
+    jsHistoryBackExit("loginPw를 입력해주세요.");
   }
-
-  $loginId = $_GET['loginId'];
-  $loginPw = $_GET['loginPw'];
 
   $sql = "
   select *
@@ -22,17 +21,15 @@
   $member = DB__getRow($sql);
 
   if(empty($member)){
-    echo "존재하지 않는 회원정보 입니다.";
-    exit;
+    jsHistoryBackExit("존재하지 않는 회원 정보 입니다.");
+  }
+  if(empty($member['delStatus'])){
+    jsHistoryBackExit("탈퇴한 회원입니다.");
   }
 
   if($member['loginPw'] != $loginPw){
-    echo "비밀번호가 일치하지 않습니다.";
-    exit;
+    jsHistoryBackExit("비밀번호가 일치하지 않습니다.");
   }
   $_SESSION['loginedMemberId'] = $member['id'];
-?>
-<script>
-alert('<?=$member['nickname']?>님 환영합니다.');
-location.replace('../article/list.php');
-</script>
+  $memberNickName = $member['nickname'];
+  jsLocationReplaceExit("../article/list.php", "${memberNickName}님 환영합니다.");

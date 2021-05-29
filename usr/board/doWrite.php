@@ -1,22 +1,23 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
-  if(!isset($_GET['name'])){
-    echo "이름을 입력헤주세요";
-    exit;
+  $name = getStrValueOr($_GET['name'], 0);
+  $code = getStrValueOr($_GET['code'], 0);
+  $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
+  
+  if(empty($name)){
+    jsHistoryBackExit("이름을 입력해주세요.");
   }
   
-  if(!isset($_GET['code'])){
-    echo "코드를 입력헤주세요";
-    exit;
+  if(empty($code)){
+    jsHistoryBackExit("코드를 입력해주세요.");
+  }
+                            
+  if(empty($memberId)){
+    jsHistoryBackExit("로그인 후 사용가능합니다.");
   }
 
-  $name = $_GET['name'];
-  $code = $_GET['code'];
-  $memberId = isset($_SESSION['loginedMemberId']) ? intval($_SESSION['loginedMemberId']) : 0;
-                            
-  if(!isset($memberId)){
-    echo "로그인후 사용가능합니다.";
-    exit;
+  if($memberId != 1){
+    jsHistoryBackExit("권한이 없습니다.");
   }
 
   $sql = "
@@ -29,8 +30,6 @@
   ";
 
   $id = DB__insertId($sql);
-?>
-<script>
-alert('<?=$id?>번 게시판이 생성되었습니다.');
-location.replace('../article/list.php');
-</script>
+  jsLocationReplaceExit("../article/list.php", "${name}게시판이 생성되었습니다.");
+
+  

@@ -54,3 +54,44 @@ function DB__query($sql){
   global $dbConn;
   mysqli_query($dbConn, $sql);
 }
+function getIntValueOr($value, $defaultValue){
+  if (isset($value)) {
+    return intval($value);
+  }
+
+  return intval($defaultValue);
+}
+
+function getStrValueOr($value, $defaultValue){
+  if(isset($value)) {
+    return strval($value);
+  }
+  return $defaultValue;
+}
+
+function jsAlert($msg){
+  echo "<script>";
+  echo "alert('${msg}');";
+  echo "</script>";
+}
+
+function jsLocationReplaceExit($url, $msg = null){
+  if($msg){
+    jsAlert($msg);
+  }
+
+  echo "<script>";
+  echo "location.replace('${url}')";
+  echo "</script>"; 
+}
+
+function jsHistoryBackExit($msg = null){
+  if($msg){
+    jsAlert($msg);
+  }
+
+  echo "<script>";
+  echo "history.back();";
+  echo "</script>";
+  exit;
+}

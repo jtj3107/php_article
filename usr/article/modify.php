@@ -1,17 +1,16 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
-  if(!isset($_SESSION['loginedMemberId'])){
-    echo "로그인후 사용 가능합니다.";
-    exit;
+  $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
+  if(empty($memberId)){
+    jsHistoryBackExit("로그인후 사용 가능합니다.");
   }
+  
+  $id = getIntValueOr($_GET['id'], 0);
 
-  if(!isset($_GET['id'])){
-    echo "id를 입력 해주세요.";
-    exit;
+  if(empty($id)){
+    jsHistoryBackExit("id를 입력해주세요");
   }
-
-  $id = intval($_GET['id']);
 
   $sql = "
   select * 
@@ -21,15 +20,12 @@
 
   $article = DB__getRow($sql);
 
-  if($_SESSION['loginedMemberId'] != $article['memberId']){
-    echo "해당 게시물 작성자만 수정 가능합니다.";
-    exit;
+  if(empty($article)){
+    jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
   }
-
-  if($article == null){
-    echo "${id}번 게시물은 존재하지 않습니다";
-    exit;
-  }
+  if($memberId != 1 and $memberId != $article['memberId']){
+    jsHistoryBackExit("해당 게시물 작성자만 수정 가능합니다.");
+  } 
 ?>
 <?php 
   $pageTitle = "${id}번 게시물 수정"
