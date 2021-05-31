@@ -24,8 +24,9 @@
 <hr>
 <nav>
     <button onclick = "location.href = '../board/write.php' ">게시판 추가</button>
+    <button onclick = "location.href = 'list.php' ">전체</button>
     <?php foreach( $boards as $board ) { ?>
-      <li style="display: inline-block;"><a href="./list.php?boardId=<?=$board['id']?>"><?=$board['name']?></a></li>
+      <li style="display: inline-block;"><a href="list.php?boardId=<?=$board['id']?>"><?=$board['name']?></a></li>
     <?php } ?>
   </ul>
 </nav>
