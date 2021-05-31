@@ -36,7 +36,6 @@
 ?>
 <?php require_once __DIR__ . "/../head.php"; ?>
   <div>
-    <a href="list.php">글 리스트</a>
     <a href="modify.php?id=<?=$article['id']?>">수정</a>
     <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['id']?>">삭제</a>
   </div>

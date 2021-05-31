@@ -12,6 +12,30 @@ a {
   color:inherit;
 }
 
-body > a{
-  color:red;
+body > h1 {
+  text-align: center;
+  font-size:5rem;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:-10px;
+}
+
+nav  {
+  text-align: center;
+  display: block;
+  font-weight: bold;
+} 
+
+nav > div {
+  display: inline-block;
+  width:120px;
+}
+
+nav > div > a {
+  display: block;
+}
+
+nav > div:hover > a {
+  background-color: black;
+  color:white;
 }
