@@ -1,4 +1,5 @@
 <?php 
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
   if(!isset($_GET['name'])){
     echo "이름을 입력해주세요.";
     exit;
@@ -29,10 +30,7 @@
     echo "로그인후 사용가능합니다.";
     exit;
   }
-
-?>
-<?php 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+ 
 
   $sql = DB__secSql();
   $sql->add("SELECT *");

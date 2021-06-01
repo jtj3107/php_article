@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php'; // $mysqli 변수 포함
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php'; // $mysqli 변수 포함
 $memberId = getIntValueOr( $_SESSION['loginedMemberId'], 0); // 사용자의 IP주소 가져오기
 $articleId = getIntValueOr($_GET['articleId'], 0);
 $replyId = getIntValueOr($_GET['replyId'], 0); // 게시글 아이디

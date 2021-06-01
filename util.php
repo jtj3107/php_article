@@ -63,15 +63,13 @@ function DB__getStmtFromSecSql(DB__SeqSql $sql): mysqli_stmt {
 
 function DB__getRow(DB__SeqSql $sql) {
   $rows = DB__getRows($sql);
-
   if ( isset($rows[0]) ) {
     return $rows[0];
   }
-
   return null;
 }
 
-function DB__getRows(DB__SeqSql $sql) {
+function DB__getRows(DB__SeqSql $sql): array {
   $stmt = DB__getStmtFromSecSql($sql);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -89,7 +87,7 @@ function DB__execute(DB__SeqSql $sql) {
   $stmt->execute();
 }
 
-function DB__insert(DB__SeqSql $sql) {
+function DB__insert(DB__SeqSql $sql): int {
   global $dbConn;
   DB__execute($sql);
 
@@ -107,7 +105,7 @@ function DB__query($sql) {
   DB__execute($sql);
 }
 
-function getIntValueOr(&$value, $defaultValue) {
+function getIntValueOr(&$value, $defaultValue):int {
   if ( isset($value) ) {
     return intval($value);
   }
@@ -115,7 +113,7 @@ function getIntValueOr(&$value, $defaultValue) {
   return $defaultValue;
 }
 
-function getStrValueOr(&$value, $defaultValue) {
+function getStrValueOr(&$value, $defaultValue): string{
   if ( isset($value) ) {
     return strval($value);
   }

@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
 
   $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
   if(empty($memberId)){

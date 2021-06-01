@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
   
   $loginId = getStrValueOr($_GET['loginId'], "");
   $loginPw = getStrValueOr($_GET['loginPw'], "");

@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
   
     $id = getIntValueOr($_SESSION['loginedMemberId'], 0);
 

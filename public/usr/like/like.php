@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php'; // $mysqli 변수 포함
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php'; // $mysqli 변수 포함
 $memberId = getIntValueOr( $_SESSION['loginedMemberId'], 0); // 사용자의 IP주소 가져오기
 $articleId = getIntValueOr($_GET['articleId'], 0); // 게시글 아이디
 if(!empty($articleId)) {
@@ -9,7 +9,8 @@ if(!empty($articleId)) {
     $sql1->add("WHERE articleId = ?", $articleId);
     $sql1->add("AND memberId = ?", $memberId);
     $res1 = DB__getRow($sql1); // sql 의 행 갯수를 가져옴 
-    if($res1 == null) {
+    
+    if($res1== null) {
         // 좋아요 기록이 없는 경우 -> 좋아요 등록
         $sql2 = DB__secSql();
         $sql2->add("INSERT into `like`");
