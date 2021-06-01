@@ -20,16 +20,15 @@
     jsHistoryBackExit("권한이 없습니다.");
   }
 
-  $sql = "
-  insert into board
-  set regDate = now(),
-  updateDate = now(),
-  `name` = '${name}',
-  `code` = '${code}',
-  memberId = '${memberId}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("INSERT INTO board");
+  $sql->add("SET regDate = NOW()");
+  $sql->add(", updateDate = NOw()");
+  $sql->add(", `name` = ?", $name);
+  $sql->add(", `code` = ?", $code);
+  $sql->add(", memberId = ?", $memberId);
 
-  $id = DB__insertId($sql);
+  DB__query($sql);
   jsLocationReplaceExit("../article/list.php", "${name}게시판이 생성되었습니다.");
 
   

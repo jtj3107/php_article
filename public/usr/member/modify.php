@@ -7,11 +7,10 @@
     jsHistoryBackExit("로그인 후 사용 가능합니다.");
   }
 
-  $sql = "
-  select * 
-  from `member` as M
-  where M.id = '${id}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM `member` AS M");
+  $sql->add("WHERE M.id= ?", $id);
 
   $member = DB__getRow($sql);
 

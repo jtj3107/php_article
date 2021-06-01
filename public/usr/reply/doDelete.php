@@ -8,11 +8,10 @@
     jsHistoryBackExit("로그인 후 사용 가능합니다.");
   }  
 
-  $sql = "
-  select *
-  from reply as R
-  where R.id = '${id}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM reply AS R");
+  $sql->add("WHERE R.id= ?", $id);
 
   $reply = DB__getRow($sql);
 
@@ -28,10 +27,9 @@
    jsHistoryBackExit("해당 댓글 작성자만 삭제 가능합니다.");
   }
 
-  $sql = "
-  delete from reply
-  where id = '${id}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("DELETE FROM reply");
+  $sql->add("WHERE id= ?", $id);
 
   DB__delete($sql);
   $replyArticleId = $reply['articleId'];

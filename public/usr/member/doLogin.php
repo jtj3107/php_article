@@ -1,8 +1,8 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
-  
-  $loginId = getStrValueOr($_GET['loginId'], "");
-  $loginPw = getStrValueOr($_GET['loginPw'], "");
+
+  $loginId = $_GET['loginId'];
+  $loginPw = $_GET['loginPw'];
   
   if(empty($loginId)){
     jsHistoryBackExit("loginId를 입력해주세요.");
@@ -12,11 +12,11 @@
     jsHistoryBackExit("loginPw를 입력해주세요.");
   }
 
-  $sql = "
-  select *
-  from `member` as M
-  where M.loginId = '${loginId}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM `member` AS M");
+  $sql->add("WHERE M.loginId = ?", $loginId);
+  $sql->add("AND M.loginPw = ?", $loginPw);
 
   $member = DB__getRow($sql);
 
@@ -27,9 +27,6 @@
     jsHistoryBackExit("탈퇴한 회원입니다.");
   }
 
-  if($member['loginPw'] != $loginPw){
-    jsHistoryBackExit("비밀번호가 일치하지 않습니다.");
-  }
   $_SESSION['loginedMemberId'] = $member['id'];
   $memberNickName = $member['nickname'];
   jsLocationReplaceExit("../article/list.php", "${memberNickName}님 환영합니다.");

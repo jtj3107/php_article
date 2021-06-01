@@ -25,25 +25,23 @@
     exit;
   } 
 
-  $sql = "
-  select *
-  from article
-  where id = '${id}'
-  ";
-
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM article");
+  $sql->add("WHERE id = ?", $id);
   $article = DB__getRow($sql);
 
   if(!isset($article)){
     jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
   } 
-  $updateSql = "
-  update article
-  set updateDate = now(),
-  title = '${title}',
-  `body` = '${body}',
-  memberId= '${memberId}'
-  where id = '${id}'
-  ";
+  
+  $updateSql = DB__secSql();
+  $updateSql->add("UPDATE article");
+  $updateSql->add("SET updateDate = NOW()");
+  $updateSql->add(", title = ?", $title);
+  $updateSql->add(", `body` = ?", $body);
+  $updateSql->add(", memberId= ?", $memberId);
+  $updateSql->add("WHERE id = ?", $id);
 
-  DB__modify($updateSql);
+  DB__update($updateSql);
   jsLocationReplaceExit("detail.php?id=${id}", "${id}번 게시물이 수정되었습니다.");

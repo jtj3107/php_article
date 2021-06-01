@@ -5,7 +5,10 @@
     jsHistoryBackExit("로그인 후 사용가능합니다.");
   }
 
-  $sql = "SELECT * FROM board ORDER BY id ASC";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM board");
+  $sql->add("ORDER BY id ASC");
   $boards = db__getRows($sql);
   
 ?>

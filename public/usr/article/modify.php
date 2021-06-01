@@ -12,11 +12,10 @@
     jsHistoryBackExit("id를 입력해주세요");
   }
 
-  $sql = "
-  select * 
-  from article as A
-  where A.id = '${id}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM article AS A");
+  $sql->add("WHERE A.id = ?", $id);
 
   $article = DB__getRow($sql);
 

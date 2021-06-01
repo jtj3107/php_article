@@ -31,40 +31,39 @@
     jsHistoryBackExit("이메일을 등록해주세요.");
   }
 
-  $memberSql = "
-  select * from `member`
-  where loginId = '${loginId}'
-  ";
+  $memberSql1 = DB__secSql();
+  $memberSql1->add("SELECT *");
+  $memberSql1->add("FROM `member`");
+  $memberSql1->add("WHERE loginId = ?", $loginId);
 
-  $member = DB__getRow($memberSql);
+  $member = DB__getRow($memberSql1);
   
   if(isset($member)){
     jsHistoryBackExit("${loginId}는 이미 사용중인 아이디입니다.");
   }
 
-  $membersSql = "
-  select * from `member`
-  ";
-  $members = DB__getRows($membersSql);
+  $membersSql2 = DB__secSql();
+  $membersSql2->add("SELECT *");
+  $membersSql2->add("FROM `member`");
+  $members = DB__getRows($membersSql2);
 
   foreach($members as $member){
     if($member['name'] == $name and $member['email'] == $email){
       jsHistoryBackExit("이미 가입된 회원정보 입니다.");
     }
   }
-  
-  $sql = "
-  insert into `member`
-  set regDate = now(),
-  updateDate = now(),
-  loginId = '${loginId}',
-  loginPw = '${loginPw}',
-  `name` = '${name}',
-  nickname = '${nickname}',
-  email = '${email}',
-  phoneNo = '${phoneNo}',
-  delStatus = 1
-  ";
+
+  $sql = DB__secSql();
+  $sql->add("INSERT INTO `member`");
+  $sql->add("SET regDate = NOW()");
+  $sql->add(", updateDate = NOW()");
+  $sql->add(", loginId = ?", $loginId);
+  $sql->add(", loginPw = ?", $loginPw);
+  $sql->add(", `name` = ?", $name);
+  $sql->add(",  nickname = ?", $nickname);
+  $sql->add(", email = ?", $email);
+  $sql->add(", phoneNo = ?", $phoneNo);
+  $sql->add(", delStatus = 1");
 
   DB__query($sql);
   jsLocationReplaceExit("login.php", "회원가입 되었습니다.");

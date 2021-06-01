@@ -24,15 +24,14 @@
     jsHistoryBackExit("로그인후 사용 가능합니다.");
   }
 
-  $sql = "
-  insert into article
-  set regDate = now(),
-  updateDate = now(),
-  title = '${title}',
-  `body` = '${body}',
-  memberId = '${memberId}',
-  boardId = '${boardId}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("INSERT INTO article");
+  $sql->add("SET regDate = NOW()");
+  $sql->add(", updateDate = NOW()");
+  $sql->add(", title = ?", $title);
+  $sql->add(", `body` = ?", $body);
+  $sql->add(", memberId = ?", $memberId);
+  $sql->add(", boardId = ?", $boardId);
 
-  $id = DB__insertId($sql);
+  $id = DB__insert($sql);
   jsLocationReplaceExit("list.php","${id}번 게시물이 생성되었습니다.");

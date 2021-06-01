@@ -5,12 +5,11 @@
   if($id == 0){
     jsHistoryBackExit("번호를 입력해주세요.");
   }
-  
-  $sql = "
-  select *
-  from article as A
-  where A.id = '${id}'
-  ";
+ 
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM article AS A");
+  $sql->add("WHERE A.id = ?", $id);
   
   $article = DB__getRow($sql);
 
@@ -20,15 +19,13 @@
     jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다");
   }
 
-  $repliSql = "
-  select *
-  from reply as R
-  where R.articleId = '${id}'
-  order by R.id desc
-  ";
+  $repliSql = DB__secSql();
+  $repliSql->add("SELECT *");
+  $repliSql->add("FROM reply AS R");
+  $repliSql->add("WHERE R.articleId = ?", $id);
+  $repliSql->add("ORDER BY R.id DESC");
 
   $replyes = DB__getRows($repliSql);
-
 
 ?>
 <?php

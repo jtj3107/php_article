@@ -12,25 +12,23 @@
     jsHistoryBackExit("body를 입력헤주세요.");
   }
 
-  $sql = "
-  select *
-  from reply
-  where id = '${id}'
-  ";
+  $sql1 = DB__secSql();
+  $sql1->add("SELECT *");
+  $sql1->add("FROM reply");
+  $sql1->add("WHERE id= ?", $id);
 
-  $reply = DB__getReply($sql);
+  $reply = DB__getRow($sql1);
 
   if(empty($reply)){
     jsHistoryBackExit("잘못된 접근입니다.");
   }
 
-  $sql = "
-  update reply
-  set updateDate = now(),
-  `body` = '${body}'
-  where id = '${id}'
-  ";
+  $sql2 = DB__secSql();
+  $sql2->add("UPDATE reply");
+  $sql2->add("SET updateDate = NOW()");
+  $sql2->add(", `body` = ?", $body);
+  $sql2->add("WHERE id= ?", $id);
 
-  DB__modifyReply($sql);
+  DB__update($sql2);
   $replyArticleId = $reply['articleId'];
   jsLocationReplaceExit("../article/detail.php?id=$replyArticleId" , "댓글이 수정되었습니다.");

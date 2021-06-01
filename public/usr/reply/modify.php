@@ -12,13 +12,12 @@
     jsHistoryBackExit("id를 입력해주세요.");
   }
 
-  $sql = "
-  select * 
-  from reply as R
-  where R.id = '${id}'
-  ";
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM reply AS R");
+  $sql->add("WHERE R.id= ?", $id);
 
-  $reply = DB__getReply($sql);
+  $reply = DB__getRow($sql);
 
   if(empty($reply)){
     jsHistoryBackExit("존재하지 않는 댓글 입니다.");

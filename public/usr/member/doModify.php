@@ -34,27 +34,24 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/webInit.php';
 
-  $sql = "
-  select *
-  from `member`
-  where id = '${id}'
-  ";
-
+  $sql = DB__secSql();
+  $sql->add("SELECT *");
+  $sql->add("FROM `member`");
+  $sql->add("WHERE id= ?", $id);
   $member = DB__getRow($sql);
 
   if(empty($member)){
     jsHistoryBackExit("잘못된 접근입니다.");
   }
-  
-  $sql = "
-  update `member`
-  set updateDate = now(),
-  name = '${name}',
-  nickname = '${nickname}',
-  email = '${email}',
-  phoneNo = '${phoneNo}'
-  where id = '${id}'
-  ";
 
-  DB__modify($sql);
+  $sql = DB__secSql();
+  $sql->add("UPDATE `member`");
+  $sql->add("SET updateDate = NOW()");
+  $sql->add(", `name` = ?", $name);
+  $sql->add(",  nickname = ?", $nickname);
+  $sql->add(", email = ?", $email);
+  $sql->add(", phoneNo = ?", $phoneNo);
+  $sql->add("WHERE id = ?", $id);
+  
+  DB__update($sql);
   jsLocationReplaceExit("../article/list.php", "회원정보가 수정되었습니다.");
