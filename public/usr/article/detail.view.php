@@ -1,5 +1,6 @@
 <?php
   $pageTitle = "게시물 상세내용, ${id}번 게시물";
+  $id = getIntValueOr($_GET['id'], 0);
 ?>
 <?php require_once __DIR__ . "/../head.php"; ?>
   <div>
@@ -17,6 +18,7 @@
     <hr>
     <div>댓글 작성</div>
     <?php
+    $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
     if(!isset($memberId)){
       echo "로그인후 사용가능합니다.";
       exit;
@@ -33,6 +35,15 @@
     </div>
     </form>
     <div>
+    <?php
+      $sql = DB__secSql();
+      $sql->add("SELECT *");
+      $sql->add("FROM reply as R");
+      $sql->add("WHERE R.articleId = ?", $id);
+      $sql->add("ORDER BY R.id DESC");
+
+      $replyes = DB__getRows($sql);
+    ?>
       <?php foreach ($replyes as $reply){ ?>
         댓글 : <?=$reply['body']?><br>
         좋아요 : <?=$reply['like_count']?><br>

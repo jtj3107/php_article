@@ -1,83 +1,53 @@
 <?php
-class APP__ArticleRepository {
-  public function getForPrintArticles(): array {
-    $sql = DB__secSql();
-    $sql->add("SELECT *");
-    $sql->add("FROM article AS A");
-    $sql->add("ORDER BY A.id DESC");
-    return DB__getRows($sql); 
+  require_once __DIR__ . '/app/repository/MemberRepository.php';
+  require_once __DIR__ . '/app/repository/ArticleRepository.php';
+  
+  require_once __DIR__ . '/app/service/MemberService.php';
+  require_once __DIR__ . '/app/service/ArticleService.php';
+  
+  require_once __DIR__ . '/app/controller/MemberController.php';
+  require_once __DIR__ . '/app/controller/ArticleController.php';
+
+  function App__getViewPath($viewName) {
+    return __DIR__ . '/public/' . $viewName . '.view.php';
   }
 
-  public function getForPrintArticleById(int $id): array {
-    $sql = DB__secSql();
-    $sql->add("SELECT *");
-    $sql->add("FROM article AS A");
-    $sql->add("WHERE A.id = ?", $id);
-    return DB__getRow($sql); 
-  }
-}
+  require_once __DIR__ . '/app/global.php';
 
-class APP__ArticleService {
-  private APP__ArticleRepository $articleRepository;
+  function APP__runBeforActionInterceptor(){
+    global $App__memberService;
+    global $App__isLogined;
+    global $App__loginedMemberId;
+    global $App__loginedMember;
 
-  public function __construct() {
-    $this->articleRepository = new APP__ArticleRepository();
-  }
-
-  public function getForPrintArticles(): array {
-    return $this->articleRepository->getForPrintArticles();
+    if(isset($_SESSION['loginedMemberId'])){
+      $App__isLogined = true;
+      $App__loginedMemberId = intval($_SESSION['loginedMemberId']);
+      $App__loginedMember = $App__memberService->getForPrintMemberById($App__loginedMemberId);
+    }
   }
 
-  public function getForPrintArticleById(int $id): array {
-    return $this->articleRepository->getForPrintArticleById($id);
+  function APP__runInterceptors(){
+    APP__runBeforActionInterceptor();
+  }
+  function APP__runAction(string $action) {
+    list($controllerTypeCode, $controllerName, $actionFuncName) = explode('/', $action);
+
+    $controllerClassName = "APP__" . ucfirst($controllerTypeCode) . ucfirst($controllerName) . "Controller";
+    $actionMethodName = "action";
+
+    if ( str_starts_with($actionFuncName, "do")){
+      $actionMethodName .= ucfirst($actionFuncName);
+    }
+    else {
+      $actionMethodName .= "show" . ucfirst($actionFuncName);
+    }
+    $usrArticleConrtoller = new $controllerClassName();
+    $usrArticleConrtoller-> $actionMethodName();
   }
   
-}
-
-class APP__UsrArticleController {
-  private APP__ArticleService $articleService;
-
-  public static function getViewPath($viewName){
-    return $_SERVER['DOCUMENT_ROOT'] . '/' . $viewName . '.view.php';
+  function APP__run(string $action){
+    APP__runInterceptors();
+    APP__runAction($action);
   }
-
-  public function __construct(){
-    $this->articleService = new APP__ArticleService();
-  }
-
-  public function actionShowList() {
-    $articles = $this->articleService->getForPrintArticles();
-
-    require_once static::getViewPath("usr/article/list");
-  }
-  public function actionShowDetail(){
-    $id = getIntValueOr($_GET['id'], 0);
-
-    if($id == 0){
-      jsHistoryBackExit("번호를 입력해주세요.");
-    }
-    $article = $this->articleService->getForPrintArticleById($id);
-
-    if ($article == null){
-      jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
-    }
-    require_once static::getViewPath("usr/article/detail");
-  }
-}
-
-function runApp($action) {
-  list($controllerTypeCode, $controllerName, $actionFuncName) = explode('/', $action);
-
-  $controllerClassName = "APP__" . ucfirst($controllerTypeCode) . ucfirst($controllerName) . "Controller";
-  $actionMethodName = "action";
-
-  if ( str_starts_with($actionFuncName, "do")){
-    $actionMethodName .= ucfirst($actionFuncName);
-  }
-  else {
-    $actionMethodName .= "show" . ucfirst($actionFuncName);
-  }
-  $usrArticleConrtoller = new $controllerClassName();
-  $usrArticleConrtoller-> $actionMethodName();
-}
 
