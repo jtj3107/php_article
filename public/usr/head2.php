@@ -1,3 +1,9 @@
+<?php
+//   $isLogined = $GLOBALS['App__isLogined'];
+//   $loginedMemberId = $GLOBALS['App__loginedMemberId'];
+//   $loginedMember = $GLOBALS['App__loginedMember'];
+  global $App__isLogined;  
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,17 +24,25 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.php">홈으로</a>
+                <a class="navbar-brand" href="../article/index.php">홈으로</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="list.php">List</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/login.php">Sing in</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/join.php">Sing up</a></li>  
+                        <?php if($App__isLogined) { ?>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../article/index.php">Home</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../article/list.php">List</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/modify.php">정보 수정</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/doLogout.php">Logout</a></li>  
+                            <li class="nav-item"><a onclick = "if(!confirm('정말로 탈퇴하시겠습니까?')){return false;}" class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/doDelete.php?id=<?=$_SESSION['loginedMemberId']?>">회원탈퇴</a></li>  
+                        <?php } else  { ?>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../article/index.php">Home</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../article/list.php">List</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/login.php">Sing in</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/usr/member/join.php">Sing up</a></li>  
+                        <?php } ?>    
                     </ul>
                 </div>
             </div>
@@ -46,3 +60,4 @@
                 </div>
             </div>
         </header>
+    
