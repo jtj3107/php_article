@@ -27,12 +27,6 @@
     jsHistoryBackExit("로그인 후 작성 가능합니다.");
   }
   
-  $sql = "
-  
-  articleId = '$articleId',
-  memberId = '$memberId',
-  like_count = 0
-  ";
   $sql = DB__secSql();
   $sql->add("INSERT INTO reply");
   $sql->add("SET regDate = NOW()");

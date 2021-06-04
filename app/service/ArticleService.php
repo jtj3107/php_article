@@ -26,5 +26,11 @@
       public function deleteArticle(int $id){
         return $this->articleRepository->deleteArticle($id);
       }
+
+      public function articleHit(int $id){
+        
+        return $this->articleRepository->articleHit($id);
+
+      }
     }
 ?>

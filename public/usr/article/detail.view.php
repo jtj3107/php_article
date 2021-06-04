@@ -34,7 +34,7 @@
                 <th>제목</th>
                 <td><?=$article['title']?></td>
                 <th>조회수</th>
-                <td>0</td>
+                <td><?=$article['hit']?></td>
             </tr>
             <tr>
                 <th>작성자</th>

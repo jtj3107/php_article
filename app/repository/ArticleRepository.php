@@ -26,6 +26,7 @@ class APP__ArticleRepository {
       $sql->add(", memberId = ?", $memberId);
       $sql->add(", boardId = ?", $boardId);
       $sql->add(", like_count = 0");
+      $sql->add(", hit = 0");
       $id = DB__insert($sql);
 
       return $id;
@@ -40,11 +41,21 @@ class APP__ArticleRepository {
 
       DB__update($sql);
     }
-    public function deleteArticle($id){
+    public function deleteArticle(int $id){
       $sql = DB__secSql();
       $sql->add("DELETE FROM article");
       $sql->add("WHERE id = ?", $id);
       DB__delete($sql);
+    }
+
+    public function articleHit(int $id){
+      $sql = DB__secSql();
+      $sql->add("UPDATE article");
+      $sql->add("SET hit = hit + 1");
+      $sql->add("WHERE id = ?", $id);
+      
+      DB__update($sql);
+      
     }
 }
 ?>

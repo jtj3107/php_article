@@ -57,6 +57,9 @@
           if ($article == null){
             jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
           }
+          
+          $this->articleService->articleHit($id);
+          
           require_once App__getViewPath("usr/article/detail");
         }
 
