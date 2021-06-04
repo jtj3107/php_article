@@ -1,11 +1,14 @@
 <?php
   require_once __DIR__ . '/app/repository/MemberRepository.php';
+  require_once __DIR__ . '/app/repository/BoardRepository.php';
   require_once __DIR__ . '/app/repository/ArticleRepository.php';
-  
+
   require_once __DIR__ . '/app/service/MemberService.php';
+  require_once __DIR__ . '/app/service/BoardService.php';
   require_once __DIR__ . '/app/service/ArticleService.php';
   
   require_once __DIR__ . '/app/controller/MemberController.php';
+  require_once __DIR__ . '/app/controller/BoardController.php';
   require_once __DIR__ . '/app/controller/ArticleController.php';
 
   function App__getViewPath($viewName) {

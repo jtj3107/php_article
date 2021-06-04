@@ -11,12 +11,12 @@
   </div>
   <div>
     <span>제목</span>
-    <input class="form-control mt-4 mb-2 ms-20" require placeholder = '제목을 입력해주세요.' type="text" name = "title" value = "<?=$article['title']?>"
+    <input class="form-control mt-4 mb-2 ms-20" require placeholder='제목을 입력해주세요.' type="text" name = "title" value = "<?=$article['title']?>"
 	>
   </div>
   <div class="form-group">
     <span>내용</span>
-    <textarea class="form-control" rows="10" require placeholder = '내용을 입력해주세요.' name="body"><?=$article['body']?></textarea>
+    <textarea class="form-control" rows="10" require placeholder='내용을 입력해주세요.' name="body"><?=$article['body']?></textarea>
   </div>
   <div>
     <input class="btn btn-primary btn-sm" type="submit" value = "글수정">

@@ -59,6 +59,7 @@
           }
           require_once App__getViewPath("usr/article/detail");
         }
+
         public function actionShowModify(){
           $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
           if(empty($memberId)){
@@ -81,6 +82,7 @@
           } 
           require_once APP__getViewPath("usr/article/modify");
         }
+        
         public function actionDoModify(){
           $id = getIntValueOr($_GET['id'], 0);
           $title = getStrValueOr($_GET['title'], "");
@@ -144,3 +146,4 @@
         }
     }
 ?>
+
