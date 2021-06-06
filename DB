@@ -8,12 +8,13 @@ CREATE TABLE article(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     title CHAR(100),
-    `body` TEXT
+    `body` TEXT,
+    memberId INT(10) NOT NULL,
+    boardId INT(10) NOT NULL,
+    like_count INT(10)
 );
-ALTER TABLE article ADD COLUMN memberId INT(10) NOT NULL;
-ALTER TABLE article ADD COLUMN boardId INT(10) NOT NULL;
-ALTER TABLE article ADD COLUMN like_count INT(10);
-ALTER TABLE article ADD COLUMN reply_like_count INT(10);
+
+ALTER TABLE article ADD COLUMN hit INT(10) UNSIGNED NOT NULL;
 
 INSERT INTO article
 SET regDate = NOW(),
@@ -23,7 +24,7 @@ title = '제목1',
 memberId = 1,
 boardId = 1,
 like_count = 0,
-reply_like_count = 0;
+hit = 0;
 
 INSERT INTO article
 SET regDate = NOW(),
@@ -33,7 +34,7 @@ title = '제목2',
 memberId = 2,
 boardId = 2,
 like_count = 0,
-reply_like_count = 0;
+hit = 0;
 
 INSERT INTO article
 SET regDate = NOW(),
@@ -43,7 +44,7 @@ title = '제목3',
 memberId = 1,
 boardId = 1,
 like_count = 0,
-reply_like_count = 0;
+hit = 0;
 
 INSERT INTO article
 SET regDate = NOW(),
@@ -53,7 +54,7 @@ title = '제목4',
 memberId = 2,
 boardId = 2,
 like_count = 0,
-reply_like_count = 0;
+hit = 0;
 
 DESC article;
 
@@ -63,11 +64,10 @@ CREATE TABLE reply(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     `body` TEXT,
-    memberId INT(10) NOT NULL
+    memberId INT(10) NOT NULL,
+    articleId INT(10),
+    like_count INT(10)
 );
-
-ALTER TABLE reply ADD COLUMN articleId INT(10) NOT NULL;
-ALTER TABLE reply ADD COLUMN like_count INT(10);
 
 CREATE TABLE `member` (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -78,7 +78,8 @@ CREATE TABLE `member` (
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
     email CHAR(100) NOT NULL,
-    phoneNo CHAR(20) NOT NULL
+    phoneNo CHAR(20) NOT NULL,
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0
 );
 
 ALTER TABLE `member` ADD COLUMN delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0
@@ -111,6 +112,8 @@ TRUNCATE `member`;
 TRUNCATE board;
 TRUNCATE `like`;
 
+DELETE FROM article;
+
 CREATE TABLE board(
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id),
@@ -139,8 +142,9 @@ CREATE TABLE `like`(
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id),
     `date` DATETIME NOT NULL,
-    articleId INT(10) NOT NULL,
+    articleId INT(10),
+    memberId INT(10),
     is_like BIT(1) NOT NULL
 );
 
-ALTER TABLE `like` ADD COLUMN memberId INT(10) NOT NULL;
+ALTER TABLE `like` ADD COLUMN replyId INT(10)

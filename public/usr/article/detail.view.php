@@ -1,6 +1,10 @@
 <?php 
   $pageTitle = "게시물 상세내용, ${id}번 게시물";
   $id = getIntValueOr($_GET['id'], 0);
+
+  if(!isset($_SESSION['loginedMemberId'])){
+    jsHistoryBackExit("로그인 후 사용가능합니다.");
+  }
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
   <div class="container">
@@ -53,13 +57,6 @@
         <br>
     <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/like.php?articleId=<?=$article['id']?>'">좋아요</button>
     <hr>
-    <?php
-    $memberId = getIntValueOr($_SESSION['loginedMemberId'], 0);
-    if(!isset($memberId)){
-      echo "로그인후 사용가능합니다.";
-      exit;
-    }
-    ?>
     </div>
     <form class="container" action="../reply/doWrite.php?articleId=<?=$article['id']?>">
     <input type="hidden" name = "articleId" value = "<?=$article['id']?>">
