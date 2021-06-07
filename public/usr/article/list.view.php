@@ -1,6 +1,4 @@
 <?php
-  $artilcleController = new APP__UsrArticleController();
-
   $boardId = isset($_GET['boardId']) ? $_GET['boardId'] : 0;
 
   $boardsql = DB__secSql();
