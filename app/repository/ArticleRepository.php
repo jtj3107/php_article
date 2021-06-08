@@ -55,7 +55,19 @@ class APP__ArticleRepository {
       $sql->add("WHERE id = ?", $id);
       
       DB__update($sql);
-      
+    }
+    
+    public function getJoinTable(int $id):array|null{
+      $sql = DB__secSql();
+      $sql->add("SELECT *");
+      $sql->add("FROM article AS A");
+      $sql->add("INNER JOIN `member` AS M");
+      $sql->add("ON M.id = A.memberId");
+      $sql->add("INNER JOIN board AS B");
+      $sql->add("ON A.boardId = B.id");
+      $sql->add("WHERE A.id = ?", $id);
+
+      return DB__getRow($sql); 
     }
 }
 ?>

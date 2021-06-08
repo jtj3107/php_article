@@ -11,5 +11,13 @@ class APP__BoardRepository {
 
         DB__query($sql);
     }
+
+    public function getForPrintBoards(): array {
+        $sql = DB__secSql();
+        $sql->add("SELECT *");
+        $sql->add("FROM board AS B");
+        $sql->add("ORDER BY B.id DESC");
+        return DB__getRows($sql); 
+    }
 }
 ?>

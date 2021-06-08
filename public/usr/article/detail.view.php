@@ -11,14 +11,7 @@
     <a href="modify.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">수정</button></a>
     <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">삭제</button></a>
   <hr>   
-    <?php
-    $memberId = $article['memberId'];
-    $memberSql = DB__secSql();
-    $memberSql->add("SELECT *");
-    $memberSql->add("FROM `member`");
-    $memberSql->add("WHERE id = ?", $memberId);
-    $member = DB__getRow($memberSql);
-    ?>
+   
     <table class="board_view">
         <colgroup>
             <col width="15%">

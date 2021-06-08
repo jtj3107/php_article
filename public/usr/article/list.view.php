@@ -1,11 +1,12 @@
 <?php
   $boardId = isset($_GET['boardId']) ? $_GET['boardId'] : 0;
+  
 
-  $boardsql = DB__secSql();
-  $boardsql->add("SELECT *");
-  $boardsql->add("FROM board");
+//   $boardsql = DB__secSql();
+//   $boardsql->add("SELECT *");
+//   $boardsql->add("FROM board");
 
-  $boards = DB__getRows($boardsql);
+//   $boards = DB__getRows($boardsql);
 ?>
 <?php 
   $pageTitle = "LIST";

@@ -10,5 +10,9 @@
         public function writeBoard(string $name, string $code, int $App__loginedMemberId){
             return $this->boardRepository->writeBoard($name, $code, $App__loginedMemberId);
           }
+
+        public function getForPrintBoards(): array {
+            return $this->boardRepository->getForPrintBoards();
+        }
     }
 ?>

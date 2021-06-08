@@ -11,9 +11,11 @@
             require_once App__getViewPath("usr/article/write");
         }
 
-        public function actionShowList() {
+        public function actionShowList() {      
           $articles = $this->articleService->getForPrintArticles();
-      
+          global $App__boardService;
+          $boards = $App__boardService->getForPrintBoards();
+
           require_once App__getViewPath("usr/article/list");
         }
 
@@ -48,17 +50,18 @@
         
         public function actionShowDetail(){
           $id = getIntValueOr($_GET['id'], 0);
-      
+          
           if($id == 0){
             jsHistoryBackExit("번호를 입력해주세요.");
           }
           $article = $this->articleService->getForPrintArticleById($id);
-      
+          
           if ($article == null){
             jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
           }
           
           $this->articleService->articleHit($id);
+          $member = $this->articleService->getJoinTable($id);
           
           require_once App__getViewPath("usr/article/detail");
         }
