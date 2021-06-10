@@ -6,7 +6,6 @@
     <a href="modify.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">수정</button></a>
     <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">삭제</button></a>
   <hr>   
-   
     <table class="board_view">
       <colgroup>
           <col width="15%">
@@ -16,34 +15,34 @@
           <col width="*">
       </colgroup>
       <tbody>
-          <tr>
-              <th>번호</th>
-              <td><?=$article['id']?></td>
-              <th>좋아요</th>
-              <td><?=$article['like_count']?></td>
-          </tr>
-          <tr>
-              <th>제목</th>
-              <td><?=$article['title']?></td>
-              <th>조회수</th>
-              <td><?=$article['hit']?></td>
-          </tr>
-          <tr>
-              <th>작성자</th>
-              <td><?=$article['extra__writerName']?></td>
-              <th>작성시간</th>
-              <td><?=$article['regDate']?></td>
-          </tr>
-          <tr>
-              <th>내용</th>
-              <td><?=$article['body']?></td>
-              <th>수정시간</th>
-              <td><?=$article['updateDate']?></td>            
-          </tr>
+        <tr>
+            <th>번호</th>
+            <td><?=$article['id']?></td>
+            <th>좋아요</th>
+            <td><?=$article['like_count']?></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td><?=$article['title']?></td>
+            <th>조회수</th>
+            <td><?=$article['hit']?></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td><?=$article['extra__writerName']?></td>
+            <th>작성시간</th>
+            <td><?=$article['regDate']?></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><?=$article['body']?></td>
+            <th>수정시간</th>
+            <td><?=$article['updateDate']?></td>            
+        </tr>
       </tbody>
     </table>
         <br>
-    <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/like.php?articleId=<?=$article['id']?>'">좋아요</button>
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/doLike.php?articleId=<?=$article['id']?>'">좋아요</button>
     <hr>
     </div>
     <form class="container" action="../reply/doWrite.php?articleId=<?=$article['id']?>">
