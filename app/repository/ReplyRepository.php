@@ -33,5 +33,34 @@
       $sql->add("WHERE id= ?", $id);
       DB__update($sql);
     }
+
+    public function writeReply(int $articleId, string $body, int $App__loginedMemberId){
+      $sql = DB__secSql();
+      $sql->add("INSERT INTO reply");
+      $sql->add("SET regDate = NOW()");
+      $sql->add(", updateDate = NOW()");
+      $sql->add(", `body` = ?", $body);
+      $sql->add(", articleId = ?", $articleId);
+      $sql->add(", memberId = ?", $App__loginedMemberId);
+      $sql->add(", like_count = 0");
+      
+      DB__query($sql);
+    }
+
+    public function replyLikeUp(int $replyId){
+      $sql3 = DB__secSql();
+      $sql3->add("UPDATE reply");
+      $sql3->add("SET like_count = like_count + 1 ");
+      $sql3->add("WHERE id = ?", $replyId);
+      DB__update($sql3);
+    }
+
+    public function replyLikeDown(int $replyId){
+      $sql3 = DB__secSql();
+      $sql3->add("UPDATE reply");
+      $sql3->add("SET like_count = like_count - 1 ");
+      $sql3->add("WHERE id = ?", $replyId);
+      DB__update($sql3);
+    }
   }
 ?>

@@ -66,5 +66,23 @@ class APP__ArticleRepository {
       
       DB__update($sql);
     }
+
+    public function articleLikeDown(int $articleId){
+      $sql = DB__secSql();
+      $sql->add("UPDATE article");
+      $sql->add("SET like_count = like_count - 1");
+      $sql->add("WHERE id = ?", $articleId);
+      DB__update($sql);
+    }
+
+    public function articleLikeUp(int $articleId){
+      $sql = DB__secSql();
+      $sql->add("UPDATE article");
+      $sql->add("SET like_count = like_count + 1");
+      $sql->add("WHERE id = ?", $articleId);
+      DB__update($sql);
+    }
 }
 ?>
+
+

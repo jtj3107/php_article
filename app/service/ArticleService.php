@@ -31,5 +31,13 @@
         return $this->articleRepository->articleHit($id);
       }
 
+      public function articleLikeDown(int $articleId){
+        return $this->articleRepository->articleLikeDown($articleId);
+      }
+
+      public function articleLikeUp(int $articleId){
+        return $this->articleRepository->articleLikeUp($articleId);
+      }
+
     }
 ?>
