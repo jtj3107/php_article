@@ -13,7 +13,10 @@
           if(!$App__isLogined){
             jsHistoryBackExit("로그인 후 사용가능합니다.");
           }
-          
+
+          global $App__boardService;
+          $boards = $App__boardService->getForPrintBoards();
+ 
           require_once App__getViewPath("usr/article/write");
         }
 

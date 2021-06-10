@@ -1,19 +1,11 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
-
-  $sql = DB__secSql();
-  $sql->add("SELECT *");
-  $sql->add("FROM board");
-  $sql->add("ORDER BY id ASC");
-  $boards = db__getRows($sql);
-  
 ?>
 <?php 
   $pageTitle = "게시물 작성";
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
   <hr>
-
   <form class="container" action="doWrite.php">
   <div>
     <select name="boardId" required>

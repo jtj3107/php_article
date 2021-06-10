@@ -24,5 +24,14 @@
       $sql->add("ORDER BY R.id DESC");
       return DB__getRows($sql); 
     }
+
+    public function modifyReply(int $id, string $body){
+      $sql = DB__secSql();
+      $sql->add("UPDATE reply");
+      $sql->add("SET updateDate = NOW()");
+      $sql->add(", `body` = ?", $body);
+      $sql->add("WHERE id= ?", $id);
+      DB__update($sql);
+    }
   }
 ?>

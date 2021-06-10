@@ -18,5 +18,22 @@
       public function getForPrintReplies(){
         return $this->replyRepository->getForPrintReplies();
       }
+
+      public function modifyReply(int $id, string $body){
+        return $this->replyRepository->modifyReply($id, $body);
+      }
+
+      public function writeReply(int $articleId, string $body, int $App__loginedMemberId) {
+        $sql = DB__secSql();
+        $sql->add("INSERT INTO reply");
+        $sql->add("SET regDate = NOW()");
+        $sql->add(", updateDate = NOW()");
+        $sql->add(", `body` = ?", $body);
+        $sql->add(", articleId = ?", $articleId);
+        $sql->add(", memberId = ?", $App__loginedMemberId);
+        $sql->add(", like_count = 0");
+        
+        DB__query($sql);
+      }
   }
 ?>

@@ -32,7 +32,91 @@
       $replyArticleId = $reply['articleId'];
       jsLocationReplaceExit("../article/detail.php?id=$replyArticleId" , "댓글이 삭제되었습니다.");
     }
+
+    public function actionDoModify(){
+      global $App__isLogined;  
+
+      if(!$App__isLogined){
+        jsHistoryBackExit("로그인 후 사용가능합니다.");
+      }
+
+      $id = getIntValueOr($_GET['id'], 0);
+      $body = getStrValueOr($_GET['body'], 0);
+    
+      if(empty($id)){
+        jsHistoryBackExit("id를 입력해주세요.");
+      }
+    
+      if(empty($body)){
+        jsHistoryBackExit("body를 입력헤주세요.");
+      }
+       
+      $reply = $this->replyService->getForPrintReplyById($id);
+    
+      if(empty($reply)){
+        jsHistoryBackExit("잘못된 접근입니다.");
+      }
+     
+      $this->replyService->modifyReply($id, $body);
+      $replyArticleId = $reply['articleId'];
+      jsLocationReplaceExit("../article/detail.php?id=$replyArticleId" , "댓글이 수정되었습니다.");
+    }
+
+    public function actionShowModify(){
+      global $App__isLogined;  
+
+      if(!$App__isLogined){
+        jsHistoryBackExit("로그인 후 사용가능합니다.");
+      }
+
+      $id = getIntValueOr($_GET['id'], 0);
+
+      if(empty($id)){
+        jsHistoryBackExit("id를 입력해주세요.");
+      }
+
+      $reply = $this->replyService->getForPrintReplyById($id);
+
+      if(empty($reply)){
+        jsHistoryBackExit("존재하지 않는 댓글 입니다.");
+      }
+
+      if($App__isLogined != 1 and $App__isLogined != $reply['memberId']){
+        jsHistoryBackExit("해당 댓글 작성자만 수정 가능합니다.");
+      }
+
+      require_once APP__getViewPath("usr/reply/modify");
+    }
+
+    public function actionDoWrite(){
+      $body = getStrValueOr($_GET['body'], "");
+      $articleId = getIntValueOr($_GET['articleId'], 0);
+      global $App__isLogined;  
+      global $App__loginedMemberId;
+      
+      if(empty($articleId)){
+        jsHistoryBackExit("게시물을 선택해주세요.");
+      }
+      if(empty($body)){
+        jsHistoryBackExit("내용을 등록해주세요.");
+      }
+
+      if(!$App__isLogined){
+        jsHistoryBackExit("로그인 후 사용가능합니다.");
+      }
+
+      global $App__articleService;
+      $article = $App__articleService->getForPrintArticleById($articleId);
+
+      if(empty($article)){
+        jsHistoryBackExit("존재하지 않는 게시물 입니다.");
+      }
+
+      $this->replyService->writeReply($articleId, $body, $App__loginedMemberId);
+
+      jsLocationReplaceExit("../article/detail.php?id=$articleId", "댓글이 등록되었습니다.");
+
+    }
   }
-  
 ?>
 
