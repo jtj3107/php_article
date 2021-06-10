@@ -17,10 +17,11 @@
       DB__delete($sql);
     }
 
-    public function getForPrintReplies():array|null{
+    public function getForPrintReplies(int $articleId):array|null{
       $sql = DB__secSql();
       $sql->add("SELECT *");
       $sql->add("FROM reply AS R");
+      $sql->add("WHERE articleId = ?", $articleId);
       $sql->add("ORDER BY R.id DESC");
       return DB__getRows($sql); 
     }

@@ -16,7 +16,7 @@ class APP__ArticleRepository {
     public function getForPrintArticleById(int $id): array|null {
       $sql = DB__secSql();
       $sql->add("SELECT *");
-      $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName, B.id AS boardNo, B.name");
+      $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName, B.id AS boardNo, B.name, A.id AS articleNo");
       $sql->add("FROM article AS A");
       $sql->add("LEFT JOIN `member` AS M");
       $sql->add("ON A.memberId = M.id");

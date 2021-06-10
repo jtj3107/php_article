@@ -3,8 +3,8 @@
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
   <div class="container">
-    <a href="modify.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">수정</button></a>
-    <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['id']?>"><button type="button" class="btn btn-primary">삭제</button></a>
+    <a href="modify.php?id=<?=$article['articleNo']?>"><button type="button" class="btn btn-primary">수정</button></a>
+    <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="doDelete.php?id=<?=$article['articleNo']?>"><button type="button" class="btn btn-primary">삭제</button></a>
   <hr>   
     <table class="board_view">
       <colgroup>
@@ -17,7 +17,7 @@
       <tbody>
         <tr>
             <th>번호</th>
-            <td><?=$article['id']?></td>
+            <td><?=$article['articleNo']?></td>
             <th>좋아요</th>
             <td><?=$article['like_count']?></td>
         </tr>
@@ -42,11 +42,11 @@
       </tbody>
     </table>
         <br>
-    <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/doLike.php?articleId=<?=$article['id']?>'">좋아요</button>
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/doLike.php?articleId=<?=$article['articleNo']?>'">좋아요</button>
     <hr>
     </div>
-    <form class="container" action="../reply/doWrite.php?articleId=<?=$article['id']?>">
-    <input type="hidden" name = "articleId" value = "<?=$article['id']?>">
+    <form class="container" action="../reply/doWrite.php?articleId=<?=$article['articleNo']?>">
+    <input type="hidden" name = "articleId" value = "<?=$article['articleNo']?>">
     <div>
       <textarea required placeholder = '내용을 입력해주세요.' name="body"></textarea>
     </div>
@@ -58,7 +58,7 @@
       <?php foreach ($replies as $reply){ ?>
         댓글 : <?=$reply['body']?><br>
         좋아요 : <?=$reply['like_count']?><br>
-        <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/doReplyLike.php?replyId=<?=$reply['id']?>&articleId=<?=$article['id']?>'">좋아요</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/doReplyLike.php?replyId=<?=$reply['id']?>&articleId=<?=$article['articleNo']?>'">좋아요</button>
         <a href="../reply/modify.php?id=<?=$reply['id']?>"><button type="button" class="btn btn-primary btn-sm">수정</button></a>
         <a onclick = "if(!confirm('삭제 하시겠습니까?')){return false;}" href="../reply/doDelete.php?id=<?=$reply['id']?>"><button type="button" class="btn btn-primary btn-sm">삭제</button></a><br>
       <?php } ?> 

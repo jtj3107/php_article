@@ -79,7 +79,7 @@
           $this->articleService->articleHit($id);
 
           global $App__replyService;
-          $replies = $App__replyService->getForPrintReplies();
+          $replies = $App__replyService->getForPrintReplies($id);
           
           require_once App__getViewPath("usr/article/detail");
         }

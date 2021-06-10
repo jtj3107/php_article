@@ -15,8 +15,8 @@
         return $this->replyRepository->deleteReply($id);
       }
 
-      public function getForPrintReplies(){
-        return $this->replyRepository->getForPrintReplies();
+      public function getForPrintReplies(int $articleId){
+        return $this->replyRepository->getForPrintReplies($articleId);
       }
 
       public function modifyReply(int $id, string $body){
