@@ -1,10 +1,5 @@
 <?php 
   $pageTitle = "게시물 상세내용, ${id}번 게시물";
-  $id = getIntValueOr($_GET['id'], 0);
-
-  if(!isset($_SESSION['loginedMemberId'])){
-    jsHistoryBackExit("로그인 후 사용가능합니다.");
-  }
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
   <div class="container">
@@ -35,7 +30,7 @@
             </tr>
             <tr>
                 <th>작성자</th>
-                <td><?=$member['nickname']?></td>
+                <td><?=$article['extra__writerName']?></td>
                 <th>작성시간</th>
                 <td><?=$article['regDate']?></td>
             </tr>
@@ -61,16 +56,7 @@
     </div>
     </form>
     <div class="container">
-    <?php
-      $sql = DB__secSql();
-      $sql->add("SELECT *");
-      $sql->add("FROM reply as R");
-      $sql->add("WHERE R.articleId = ?", $id);
-      $sql->add("ORDER BY R.id DESC");
-
-      $replyes = DB__getRows($sql);
-    ?>
-      <?php foreach ($replyes as $reply){ ?>
+      <?php foreach ($replies as $reply){ ?>
         댓글 : <?=$reply['body']?><br>
         좋아요 : <?=$reply['like_count']?><br>
         <button type="button" class="btn btn-primary btn-sm" onclick="location.href = '../like/replyLike.php?replyId=<?=$reply['id']?>&articleId=<?=$article['id']?>'">좋아요</button>

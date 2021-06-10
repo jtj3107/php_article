@@ -31,8 +31,5 @@
         return $this->articleRepository->articleHit($id);
       }
 
-      public function getJoinTable(int $id): array|null{
-        return $this->articleRepository->getJoinTable($id);
-      }
     }
 ?>

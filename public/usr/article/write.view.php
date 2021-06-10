@@ -1,10 +1,6 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/../webInit.php';
 
-  if(!isset($_SESSION['loginedMemberId'])){
-    jsHistoryBackExit("로그인 후 사용가능합니다.");
-  }
-
   $sql = DB__secSql();
   $sql->add("SELECT *");
   $sql->add("FROM board");

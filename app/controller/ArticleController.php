@@ -8,7 +8,13 @@
         }
 
         public function actionShowWrite() {
-            require_once App__getViewPath("usr/article/write");
+          global $App__isLogined; 
+          
+          if(!$App__isLogined){
+            jsHistoryBackExit("로그인 후 사용가능합니다.");
+          }
+          
+          require_once App__getViewPath("usr/article/write");
         }
 
         public function actionShowList() {      
@@ -49,6 +55,13 @@
         }
         
         public function actionShowDetail(){
+          
+          global $App__isLogined;  
+
+          if(!$App__isLogined){
+            jsHistoryBackExit("로그인 후 사용가능합니다.");
+          }
+
           $id = getIntValueOr($_GET['id'], 0);
           
           if($id == 0){
@@ -61,7 +74,9 @@
           }
           
           $this->articleService->articleHit($id);
-          $member = $this->articleService->getJoinTable($id);
+
+          global $App__replyService;
+          $replies = $App__replyService->getForPrintReplies();
           
           require_once App__getViewPath("usr/article/detail");
         }

@@ -14,5 +14,9 @@
       public function deleteReply(int $id){
         return $this->replyRepository->deleteReply($id);
       }
+
+      public function getForPrintReplies(){
+        return $this->replyRepository->getForPrintReplies();
+      }
   }
 ?>

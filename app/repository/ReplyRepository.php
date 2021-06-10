@@ -16,5 +16,13 @@
 
       DB__delete($sql);
     }
+
+    public function getForPrintReplies():array|null{
+      $sql = DB__secSql();
+      $sql->add("SELECT *");
+      $sql->add("FROM reply AS R");
+      $sql->add("ORDER BY R.id DESC");
+      return DB__getRows($sql); 
+    }
   }
 ?>

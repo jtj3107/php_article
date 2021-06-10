@@ -1,14 +1,5 @@
 <?php
   $boardId = isset($_GET['boardId']) ? $_GET['boardId'] : 0;
-  
-
-//   $boardsql = DB__secSql();
-//   $boardsql->add("SELECT *");
-//   $boardsql->add("FROM board");
-
-//   $boards = DB__getRows($boardsql);
-?>
-<?php 
   $pageTitle = "LIST";
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
@@ -25,37 +16,20 @@
                     <th scope="col">작성자</th>
                     <th scope="col">좋아요</th>
                     <th scope="col">작성날짜</th>
+                    <th scope="col">조회수</th>
                     </tr>
                 </thead>
             <?php foreach ($articles as $article){ ?>
                 <?php 
-                if ($article['boardId'] == $boardId or $boardId == 0) {?>
-                    <?php
-                    $memberId = $article['memberId'];
-                    $articleBoardId = $article['boardId'];
-                    
-                    $memberSql = DB__secSql();
-                    $memberSql->add("SELECT *");
-                    $memberSql->add("FROM `member`");
-                    $memberSql->add("WHERE id = ?", $memberId);
-                
-                    $member = DB__getRow($memberSql);
-            
-                    $memberSql = DB__secSql();
-                    $memberSql->add("SELECT *");
-                    $memberSql->add("FROM board");
-                    $memberSql->add("WHERE id = ?", $articleBoardId);
-                
-                    $board = DB__getRow($memberSql);
-                    $boardName = isset($board['name']) ? $board['name'] : "카테고리없음";
-                ?>    
+                if ($article['boardId'] == $boardId or $boardId == 0) {?> 
                     <tbody>
                         <tr>
                         <th scope="row"><?=$article['id']?></th>
                         <td><a href="detail.php?id=<?=$article['id']?>"><?=$article['title']?></a></td>
-                        <td><?=$member['nickname']?></td>
+                        <td><?=$article['extra__writerName']?></td>
                         <td><?=$article['like_count']?></td>
                         <td><?=$article['regDate']?></td>    
+                        <td><?=$article['hit']?></td>
                         </tr>         
                     </tbody>          
         <!-- Divider-->

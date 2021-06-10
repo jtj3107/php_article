@@ -2,8 +2,13 @@
 class APP__ArticleRepository {
     public function getForPrintArticles(): array {
         $sql = DB__secSql();
-        $sql->add("SELECT *");
+        $sql->add("SELECT A.*");
+        $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName");
         $sql->add("FROM article AS A");
+        $sql->add("LEFT JOIN `member` AS M");
+        $sql->add("ON A.memberId = M.id");
+        $sql->add("LEFT JOIN board AS B");
+        $sql->add("ON A.boardId = B.id");
         $sql->add("ORDER BY A.id DESC");
         return DB__getRows($sql); 
     }
@@ -11,7 +16,12 @@ class APP__ArticleRepository {
     public function getForPrintArticleById(int $id): array|null {
       $sql = DB__secSql();
       $sql->add("SELECT *");
+      $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName, B.id AS boardNo, B.name");
       $sql->add("FROM article AS A");
+      $sql->add("LEFT JOIN `member` AS M");
+      $sql->add("ON A.memberId = M.id");
+      $sql->add("LEFT JOIN board AS B");
+      $sql->add("ON A.boardId = B.id");
       $sql->add("WHERE A.id = ?", $id);
       return DB__getRow($sql); 
     }
@@ -55,19 +65,6 @@ class APP__ArticleRepository {
       $sql->add("WHERE id = ?", $id);
       
       DB__update($sql);
-    }
-    
-    public function getJoinTable(int $id):array|null{
-      $sql = DB__secSql();
-      $sql->add("SELECT *");
-      $sql->add("FROM article AS A");
-      $sql->add("INNER JOIN `member` AS M");
-      $sql->add("ON M.id = A.memberId");
-      $sql->add("INNER JOIN board AS B");
-      $sql->add("ON A.boardId = B.id");
-      $sql->add("WHERE A.id = ?", $id);
-
-      return DB__getRow($sql); 
     }
 }
 ?>

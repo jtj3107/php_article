@@ -14,7 +14,7 @@ $articleId = getIntValueOr($_GET['articleId'], 0); // 게시글 아이디
         // 좋아요 기록이 없는 경우 -> 좋아요 등록
         $sql2 = DB__secSql();
         $sql2->add("INSERT into `like`");
-        $sql2->add("SET `date` = NOw()");
+        $sql2->add("SET `date` = NOW()");
         $sql2->add(", articleId = ?", $articleId);
         $sql2->add(", memberId = ?", $memberId);
         $sql2->add(", is_like = 1");
