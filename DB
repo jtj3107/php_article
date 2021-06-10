@@ -89,10 +89,10 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'user1',
 loginPw = 'user1',
-`name` = '홍길동',
-nickname = '강바람',
-email = 'user1@test.com',
-phoneNo = '01011111111',
+`name` = '운영자',
+nickname = '운영자',
+email = 'jtj3926@gmail.com',
+phoneNo = '01028033107',
 delStatus = 1;
 
 INSERT INTO `member`
@@ -100,10 +100,10 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'user2',
 loginPw = 'user2',
-`name` = '홍길순',
-nickname = '이또한',
-email = 'user2@test.com',
-phoneNo = '01022222222',
+`name` = '조태중',
+nickname = '조태중',
+email = 'jtj3926@gmail.com',
+phoneNo = '01028033107',
 delStatus = 1;
 
 TRUNCATE article;
@@ -148,3 +148,13 @@ CREATE TABLE `like`(
 );
 
 ALTER TABLE `like` ADD COLUMN replyId INT(10)
+        
+SELECT A.*, IFNULL(M.nickname, '삭제된사용자') AS extra__writerName, B.id AS boardNo, B.name 
+FROM article AS A
+LEFT JOIN `member` AS M
+ON A.memberId = M.id
+LEFT JOIN board AS B
+ON A.boardId = B.id
+ORDER BY A.id DESC;
+
+SELECT * FROM `member`;
