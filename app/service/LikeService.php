@@ -11,5 +11,8 @@
             return $this->likeRepository->getForPrintLikeByArticleIdAndMemberId($articleId, $App__loginedMemberId);
         }
 
+        public function insertLike(int $articleId, int $App__loginedMemberId) {
+            return $this->likeRepository->insertLike($articleId, $App__loginedMemberId);
+        }
     }
 ?>

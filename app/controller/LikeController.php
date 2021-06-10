@@ -15,15 +15,9 @@ class APP__UsrLikeController {
             $res1 = $this->likeService->getForPrintLikeByArticleIdAndMemberId($articleId, $App__loginedMemberId);// sql 의 행 갯수를 가져옴     
         if($res1== null) {
             // 좋아요 기록이 없는 경우 -> 좋아요 등록
-            $sql2 = DB__secSql();
-            $sql2->add("INSERT into `like`");
-            $sql2->add("SET `date` = NOW()");
-            $sql2->add(", articleId = ?", $articleId);
-            $sql2->add(", memberId = ?", $App__loginedMemberId);
-            $sql2->add(", is_like = 1");
-            $res2 = DB__query($sql2);
-            // 게시판 테이블 업데이트
+            $this->likeService->insertLike($articleId, $App__loginedMemberId);
             
+            // 게시판 테이블 업데이트
             $sql3 = DB__secSql();
             $sql3->add("UPDATE article");
             $sql3->add("SET like_count = like_count + 1");
