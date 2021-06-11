@@ -8,13 +8,11 @@
     }
     public function actionDoDelete(){
       $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-      global $App__isLogined;
-      global $App__loginedMemberId;
       
       if (empty($id)){
         jsHistoryBackExit("없는 댓글 이거나 잘못된 접근 입니다.");
       }  
-      if(!$App__isLogined){
+      if(!$_REQUEST['App__isLogined']){
         jsHistoryBackExit("로그인 후 사용 가능 합니다.");
       }
 
@@ -23,7 +21,7 @@
       if($reply == null){
         jsHistoryBackExit("잘못된 접근 입니다.");
       }
-      if($App__loginedMemberId != 1 and $App__loginedMemberId != $reply['memberId']){
+      if($_REQUEST['App__loginedMemberId'] != 1 and $_REQUEST['App__loginedMemberId'] != $reply['memberId']){
        jsHistoryBackExit("해당 댓글 작성자만 삭제 가능합니다.");
       }
 
@@ -34,9 +32,8 @@
     }
 
     public function actionDoModify(){
-      global $App__isLogined;  
 
-      if(!$App__isLogined){
+      if(!$_REQUEST['App__isLogined']){
         jsHistoryBackExit("로그인 후 사용가능합니다.");
       }
 
@@ -63,9 +60,8 @@
     }
 
     public function actionShowModify(){
-      global $App__isLogined;  
 
-      if(!$App__isLogined){
+      if(!$_REQUEST['App__isLogined']){
         jsHistoryBackExit("로그인 후 사용가능합니다.");
       }
 
@@ -81,7 +77,7 @@
         jsHistoryBackExit("존재하지 않는 댓글 입니다.");
       }
 
-      if($App__isLogined != 1 and $App__isLogined != $reply['memberId']){
+      if($_REQUEST['App__loginedMemberId'] != 1 and $_REQUEST['App__loginedMemberId'] != $reply['memberId']){
         jsHistoryBackExit("해당 댓글 작성자만 수정 가능합니다.");
       }
 
@@ -90,9 +86,7 @@
 
     public function actionDoWrite(){
       $body = getStrValueOr($_GET['body'], "");
-      $articleId = getIntValueOr($_GET['articleId'], 0);
-      global $App__isLogined;  
-      global $App__loginedMemberId;
+      $articleId = getIntValueOr($_GET['articleId'], 0);   
       
       if(empty($articleId)){
         jsHistoryBackExit("게시물을 선택해주세요.");
@@ -101,7 +95,7 @@
         jsHistoryBackExit("내용을 등록해주세요.");
       }
 
-      if(!$App__isLogined){
+      if(!$_REQUEST['App__isLogined']){
         jsHistoryBackExit("로그인 후 사용가능합니다.");
       }
 
@@ -112,7 +106,7 @@
         jsHistoryBackExit("존재하지 않는 게시물 입니다.");
       }
 
-      $this->replyService->writeReply($articleId, $body, $App__loginedMemberId);
+      $this->replyService->writeReply($articleId, $body, $_REQUEST['App__loginedMemberId']);
 
       jsLocationReplaceExit("../article/detail.php?id=$articleId", "댓글이 등록되었습니다.");
 

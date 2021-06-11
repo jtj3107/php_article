@@ -25,14 +25,15 @@
 
   function APP__runBeforActionInterceptor(){
     global $App__memberService;
-    global $App__isLogined;
-    global $App__loginedMemberId;
-    global $App__loginedMember;
+
+    $_REQUEST['App__isLogined'] = false;
+    $_REQUEST['App__loginedMemberId'] = 0;
+    $_REQUEST['App__loginedMember'] = null;
 
     if(isset($_SESSION['loginedMemberId'])){
-      $App__isLogined = true;
-      $App__loginedMemberId = intval($_SESSION['loginedMemberId']);
-      $App__loginedMember = $App__memberService->getForPrintMemberById($App__loginedMemberId);
+      $_REQUEST['App__isLogined'] = true;
+      $_REQUEST['App__loginedMemberId'] = intval($_SESSION['loginedMemberId']);
+      $_REQUEST['App__loginedMember'] = $App__memberService->getForPrintMemberById($_REQUEST['App__loginedMemberId']);
     }
   }
 

@@ -43,10 +43,6 @@
         public function actionDoDelete(){
           $id = getIntValueOr($_SESSION['loginedMemberId'], 0);
   
-          if(!isset($id)){
-              jsHistoryBackExit("로그인 후 사용가능합니다.");
-          }
-  
           $member = $this->memberService->getForPrintMemberById($id);
   
           if($member == null){
@@ -132,8 +128,7 @@
         $nickname = getStrValueOr($_GET['nickname'],"");
         $email = getStrValueOr($_GET['email'], "");
         $phoneNo = getStrValueOr($_GET['email'], "");
-        global $App__loginedMemberId;
-        global $App__isLogined;
+         
 
         if(empty($loginPw)){
           jsHistoryBackExit("비밃번호를 입력해주세요.");
@@ -155,17 +150,17 @@
           jsHistoryBackExit("휴대전화번호를 입력해주세요.");
         }
       
-        if(!$App__isLogined){
+        if(!$_REQUEST['App__isLogined']){
           jsHistoryBackExit("로그인후 사용가능합니다.");
         }
        
-        $member = $this->memberService->getForPrintMemberById($App__loginedMemberId);
+        $member = $this->memberService->getForPrintMemberById($_REQUEST['App__loginedMemberId']);
       
         if($member['loginPw'] != $CurrentLoginPw){
           jsHistoryBackExit("현재 비밀번호가 틀렸습니다.");
         }
         
-        $this->memberService->modifyMember($loginPw, $name, $nickname, $email, $phoneNo, $App__loginedMemberId);
+        $this->memberService->modifyMember($loginPw, $name, $nickname, $email, $phoneNo, $_REQUEST['App__loginedMemberId']);
         jsLocationReplaceExit("../article/list.php", "회원정보가 수정되었습니다.");
       
       }

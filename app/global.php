@@ -14,7 +14,7 @@
   $App__likeService = new APP__likeService();
   
   // 뷰에서 사용할 이용자의 로그인 상태관련 전역변수
-  $App__isLogined = false;
-  $App__loginedMemberId = 0;
-  $App__loginedMember = null;
+  $_REQUEST['App__isLogined'] = false;
+  $_REQUEST['App__loginedMemberId'] = 0;
+  $_REQUEST['App__loginedMember'] = null;
 ?>
