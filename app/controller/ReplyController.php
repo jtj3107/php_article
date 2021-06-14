@@ -12,9 +12,6 @@
       if (empty($id)){
         jsHistoryBackExit("없는 댓글 이거나 잘못된 접근 입니다.");
       }  
-      if(!$_REQUEST['App__isLogined']){
-        jsHistoryBackExit("로그인 후 사용 가능 합니다.");
-      }
 
       $reply = $this->replyService->getForPrintReplyById($id);
 
@@ -32,10 +29,6 @@
     }
 
     public function actionDoModify(){
-
-      if(!$_REQUEST['App__isLogined']){
-        jsHistoryBackExit("로그인 후 사용가능합니다.");
-      }
 
       $id = getIntValueOr($_GET['id'], 0);
       $body = getStrValueOr($_GET['body'], 0);
@@ -60,10 +53,6 @@
     }
 
     public function actionShowModify(){
-
-      if(!$_REQUEST['App__isLogined']){
-        jsHistoryBackExit("로그인 후 사용가능합니다.");
-      }
 
       $id = getIntValueOr($_GET['id'], 0);
 
@@ -93,10 +82,6 @@
       }
       if(empty($body)){
         jsHistoryBackExit("내용을 등록해주세요.");
-      }
-
-      if(!$_REQUEST['App__isLogined']){
-        jsHistoryBackExit("로그인 후 사용가능합니다.");
       }
 
       global $App__articleService;

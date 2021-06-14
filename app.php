@@ -23,7 +23,7 @@
 
   require_once __DIR__ . '/app/global.php';
 
-  function APP__runBeforActionInterceptor(){
+  function APP__runBeforActionInterceptor(string $action){
     global $App__memberService;
 
     $_REQUEST['App__isLogined'] = false;
@@ -37,8 +37,43 @@
     }
   }
 
-  function APP__runInterceptors(){
-    APP__runBeforActionInterceptor();
+  function APP__runNeedLoginInterceptor(string $action){
+    switch ($action){
+      case 'usr/member/login':
+      case 'usr/member/doLogin':
+      case 'usr/member/join':
+      case 'usr/member/doJoin':
+      case 'usr/article/list':
+      case 'usr/article/detail':
+        return;
+        break;
+    }
+
+    if ($_REQUEST['App__isLogined'] == false){
+      jsHistoryBackExit("로그인 후 사용 가능합니다.");
+    }
+  }
+
+  function APP__runNeedLogoutInterceptor(string $action){
+    switch ($action){
+      case 'usr/member/login':
+      case 'usr/member/doLogin':
+      case 'usr/member/join':
+      case 'usr/member/doJoin':
+        break;
+      default:
+        return;
+    }
+
+    if ($_REQUEST['App__isLogined']){
+      jsHistoryBackExit("로그아웃 후 사용 가능합니다.");
+    }
+  }
+
+  function APP__runInterceptors(string $action){
+    APP__runBeforActionInterceptor($action);
+    APP__runNeedLoginInterceptor($action);
+    APP__runNeedLogoutInterceptor($action);
   }
   function APP__runAction(string $action) {
     list($controllerTypeCode, $controllerName, $actionFuncName) = explode('/', $action);
@@ -57,7 +92,7 @@
   }
   
   function APP__run(string $action){
-    APP__runInterceptors();
+    APP__runInterceptors($action);
     APP__runAction($action);
   }
 

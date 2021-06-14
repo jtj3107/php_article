@@ -9,10 +9,6 @@
 
         public function actionShowWrite() {
           
-          if(!$_REQUEST['App__isLogined']){
-            jsHistoryBackExit("로그인 후 사용가능합니다.");
-          }
-
           global $App__boardService;
           $boards = $App__boardService->getForPrintBoards();
  
@@ -47,18 +43,11 @@
               jsHistoryBackExit("권한이 없습니다.");
           }
                                      
-          if(!$_REQUEST['App__isLogined']){
-              jsHistoryBackExit("로그인후 사용 가능합니다.");
-          }
           $id = $this->articleService->writeArticle($title, $body, $_REQUEST['App__loginedMemberId'], $boardId);
           jsLocationReplaceExit("list.php","${id}번 게시물이 생성되었습니다.");
         }
         
         public function actionShowDetail(){
-
-          if(!$_REQUEST['App__isLogined']){
-            jsHistoryBackExit("로그인 후 사용가능합니다.");
-          }
 
           $id = getIntValueOr($_GET['id'], 0);
           
@@ -80,9 +69,7 @@
         }
 
         public function actionShowModify(){
-          if(!$_REQUEST['App__isLogined']){
-            jsHistoryBackExit("로그인 후 사용가능합니다.");
-          }
+           
           
           $id = getIntValueOr($_GET['id'], 0);
 
@@ -117,12 +104,7 @@
           if( empty($body)){
             jsHistoryBackExit("body를 입력해주세요.");
           }
-
-          if(!$_REQUEST['App__isLogined']){
-            echo "로그인후 사용가능합니다.";
-            exit;
-          } 
-          
+   
           $article = $this->articleService->getForPrintArticleById($id);
           
           if(!isset($article)){
@@ -140,10 +122,6 @@
 
           if(empty($id)){
             jsHistoryBackExit("게시물 번호를 입력해주세요.");
-          }
-
-          if(!$_REQUEST['App__isLogined']){
-            jsHistoryBackExit("로그인후 사용 가능합니다.");
           }
 
           $article = $this->articleService->getForPrintArticleById($id);

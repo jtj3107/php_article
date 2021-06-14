@@ -108,10 +108,6 @@
       public function actionShowModify(){
         $id = getIntValueOr($_SESSION['loginedMemberId'], 0);
 
-        if(empty($id)){
-          jsHistoryBackExit("로그인 후 사용 가능합니다.");
-        }
-      
         $member = $this->memberService->getForPrintMemberById($id);
       
         if(empty($member)){
@@ -149,11 +145,7 @@
         if(empty($phoneNo)){
           jsHistoryBackExit("휴대전화번호를 입력해주세요.");
         }
-      
-        if(!$_REQUEST['App__isLogined']){
-          jsHistoryBackExit("로그인후 사용가능합니다.");
-        }
-       
+
         $member = $this->memberService->getForPrintMemberById($_REQUEST['App__loginedMemberId']);
       
         if($member['loginPw'] != $CurrentLoginPw){
