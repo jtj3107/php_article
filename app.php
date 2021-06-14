@@ -17,6 +17,25 @@
   require_once __DIR__ . '/app/controller/ReplyController.php';
   require_once __DIR__ . '/app/controller/LikeController.php';
 
+  class ResultData {
+    public function __construct(
+      private string $resultCode, 
+      private string $msg
+    ) { }
+  
+    public function isSuccess():bool {
+      return str_starts_with($this->resultCode, "S-");
+    }
+  
+    public function isFail():bool {
+      return !$this->isSuccess();
+    }
+  
+    public function getMsg():string {
+      return $this->msg;
+    }
+  }
+
   function App__getViewPath($viewName) {
     return __DIR__ . '/public/' . $viewName . '.view.php';
   }

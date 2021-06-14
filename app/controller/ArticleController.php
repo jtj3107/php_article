@@ -82,9 +82,13 @@
           if($article == null){
             jsHistoryBackExit("${id}번 게시물은 존재하지 않습니다.");
           }
-          if($_REQUEST['App__loginedMemberId'] != 1 and $_REQUEST['App__loginedMemberId'] != $article['memberId']){
-            jsHistoryBackExit("해당 게시물 작성자만 수정 가능합니다.");
-          } 
+          
+          $actorCanModifyRs = $this->articleService->getActorCanModify($_REQUEST['App__loginedMember'], $article);
+
+          if ( $actorCanModifyRs->isFail() ) {
+            jsHistoryBackExit($actorCanModifyRs->getMsg());
+          }      
+
           require_once APP__getViewPath("usr/article/modify");
         }
         

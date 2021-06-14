@@ -3,11 +3,11 @@
 ?>
 <?php include_once __DIR__ . "/../head2.php" ?>
   <hr>
-  <form class="container" action="doModify.php?id=<?=$article['id']?>">
-  <input type="hidden" name = "id" value = "<?=$article['id']?>">
+  <form class="container" action="doModify.php?id=<?=$article['articleNo']?>">
+  <input type="hidden" name = "id" value = "<?=$article['articleNo']?>">
   <div class="form-group">
     <span>번호</span>
-    <span><?=$article['id']?></span>
+    <span><?=$article['articleNo']?></span>
   </div>
   <div>
     <span>제목</span>
