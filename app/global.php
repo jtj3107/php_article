@@ -17,4 +17,6 @@
   $_REQUEST['App__isLogined'] = false;
   $_REQUEST['App__loginedMemberId'] = 0;
   $_REQUEST['App__loginedMember'] = null;
+
+  $application = new App__Application();
 ?>

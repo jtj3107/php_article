@@ -30,6 +30,7 @@ class APP__MemberRepository {
       $sql = DB__secSql();
       $sql->add("UPDATE `member`");
       $sql->add("SET delStatus = 0");
+      $sql->add(", delDate = NOW()");
       $sql->add("WHERE id = ?", $id);
       DB__update($sql);
       unset($_SESSION['loginedMemberId']); 

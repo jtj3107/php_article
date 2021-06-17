@@ -41,14 +41,14 @@
         }
 
         public function actionDoDelete(){
-          $id = getIntValueOr($_SESSION['loginedMemberId'], 0);
+          unset($_SESSION['loginedMemberId']);
   
-          $member = $this->memberService->getForPrintMemberById($id);
+          $member = $this->memberService->getForPrintMemberById($_REQUEST['App__loginedMemberId']);
   
           if($member == null){
               jsHistoryBackExit("잘못된 접근입니다.");
           }
-          $this->memberService->deleteMember($id);
+          $this->memberService->deleteMember($_REQUEST['App__loginedMemberId']);
   
           jsLocationReplaceExit("../article/list.php", "회원 탈퇴 되었습니다.");
       }
