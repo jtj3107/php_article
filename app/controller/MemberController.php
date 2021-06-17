@@ -12,8 +12,8 @@
         }
 
         public function actionDologin(){
-          $loginId = $_GET['loginId'];
-          $loginPw = $_GET['loginPw'];
+          $loginId = getStrValueOr($_REQUEST['loginId'], "");
+          $loginPw = getStrValueOr($_REQUEST['loginPw'], "");
           
           if(empty($loginId)){
             jsHistoryBackExit("loginId를 입력해주세요.");

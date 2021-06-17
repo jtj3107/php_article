@@ -17,6 +17,7 @@
 
         public function actionShowList() {      
           $articles = $this->articleService->getForPrintArticles();
+          $totalCount = $this->articleService->getTotalArticlesCount();
           global $App__boardService;
           $boards = $App__boardService->getForPrintBoards();
 

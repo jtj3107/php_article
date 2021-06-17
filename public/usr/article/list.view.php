@@ -8,6 +8,7 @@
         <?php foreach( $boards as $board ) { ?>
         <a href="list.php?boardId=<?=$board['id']?>"><button type="button" class="btn btn-primary"><?=$board['name']?></button></a>
         <?php } ?>
+        <div>전체 게시물 수, <?=$totalCount?></div>
             <table class="table">
                 <thead>
                     <tr>

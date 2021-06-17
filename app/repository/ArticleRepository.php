@@ -1,18 +1,25 @@
 <?php
 class APP__ArticleRepository {
-    public function getForPrintArticles(): array {
-        $sql = DB__secSql();
-        $sql->add("SELECT A.*");
-        $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName");
-        $sql->add("FROM article AS A");
-        $sql->add("LEFT JOIN `member` AS M");
-        $sql->add("ON A.memberId = M.id");
-        $sql->add("LEFT JOIN board AS B");
-        $sql->add("ON A.boardId = B.id");
-        $sql->add("ORDER BY A.id DESC");
-        return DB__getRows($sql); 
-    }
+  public function getTotalArticlesCount(): int {
+      $sql = DB__secSql();
+      $sql->add("SELECT COUNT(*) as cnt");
+      $sql->add("FROM article AS A");
+      return DB__getRowIntValue($sql, 0); 
+  }
 
+  public function getForPrintArticles(): array {
+      $sql = DB__secSql();
+      $sql->add("SELECT A.*");
+      $sql->add(", IFNULL(M.nickname, '삭제된사용자') AS extra__writerName");
+      $sql->add("FROM article AS A");
+      $sql->add("LEFT JOIN `member` AS M");
+      $sql->add("ON A.memberId = M.id");
+      $sql->add("LEFT JOIN board AS B");
+      $sql->add("ON A.boardId = B.id");
+      $sql->add("ORDER BY A.id DESC");
+      return DB__getRows($sql); 
+    }
+    
     public function getForPrintArticleById(int $id): array|null {
       $sql = DB__secSql();
       $sql->add("SELECT *");
@@ -82,6 +89,7 @@ class APP__ArticleRepository {
       $sql->add("WHERE id = ?", $articleId);
       DB__update($sql);
     }
+    
 }
 ?>
 
